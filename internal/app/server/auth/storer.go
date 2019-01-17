@@ -3,8 +3,8 @@ package auth
 import (
 	"context"
 	"github.com/jinzhu/gorm"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/db"
 	"github.com/volatiletech/authboss"
-	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/db"
 )
 
 var storer UserStorer

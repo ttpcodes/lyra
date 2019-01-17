@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/db"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 	"github.com/sirupsen/logrus"
-	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/db"
-	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/server"
-	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 )
 
 func main() {

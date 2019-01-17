@@ -3,8 +3,8 @@ package server
 import (
 	"context"
 	"github.com/gorilla/mux"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 	"github.com/sirupsen/logrus"
-	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 	"net/http"
 	"os"
 	"os/signal"
