@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
+	"gitlab.com/ttpcodes/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,7 +14,12 @@ import (
 func CreateRouter() {
 	wait := time.Duration(15)
 
+
+	ab := auth.GetAuth()
 	r := mux.NewRouter()
+	r.Use(ab.LoadClientStateMiddleware)
+
+	r.PathPrefix("/auth").Handler(http.StripPrefix("/auth", ab.Config.Core.Router))
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:80",
