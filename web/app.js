@@ -5,7 +5,7 @@ const app = express();
 
 app.use('/static', express.static('public'));
 app.get('/', function(req,res){
-    res.sendFile('BStest.html', {root:'public/views'});
+    res.sendFile('index.html', {root:'public/views'});
 });
 
 

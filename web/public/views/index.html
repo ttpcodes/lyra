@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>music</title>
+        <link href="https://fonts.googleapis.com/css?family=Nova+Square" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">       
+        <link href ="/static/css/index.css" rel = "stylesheet">
+        <style>
+            body { background-color: #000000; }
+        </style>    
+    </head>
+
+    <body>
+    <!--background-->
+    <div class = "wholescreen background" id="background">
+
+    <!--blackscreen-->
+    <div id = "blackscreen">
+            <!--particles-->
+            <div id="particles-js" style = "width:100%;
+            height:100%"></div>
+    </div>
+    
+    <!--MuteMeDaddy-->
+    <div >
+        <i id="mutebutton" class="fas fa-volume-up fa-2x" style = "color:#DDDDDD; position: absolute; bottom:4px; right: 4px; opacity: 0.8; "></i>
+    </div>
+          
+    <!--text-->
+    <div id = "textfadeout">
+        <div id = "cover_text" class="center home_text flicker">
+            <p>
+                Press Any Key To Start
+            </p>
+        </div>
+    </div>
+
+    <!--HomeText-->
+    <div id ="hometextdiv" class = "props">
+        <div class = "big">
+            <p>
+                Lyra
+            </p>
+        </div>
+        <div class = "small">
+                <p>
+                    Music among the stars
+                </p>
+        </div>  
+    </div>
+
+    <!--AboutText-->
+    <div id ="abouttextdiv" class = "propstwo">
+        <div class = "bigtwo">
+            <p>
+                About   
+            </p>
+        </div>
+        <div class = "smalltwo">
+            <p>                
+                To be, or not to be: that is the question: whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles, and by opposing end them? To die: to sleep; no more; and, by a sleep to say we end the heart-ache and the thousand natural shocks that flesh is heir to, 'tis a consummation devoutly to be wish'd.
+            </p>
+        </div>  
+    </div>
+
+    <!--logintext-->
+    <div id ="logintextdiv" class = "propsthree">
+        <div class = "bigthree">
+            <p>
+                Login
+            </p>
+        </div>
+
+        <div class = "smallthree">            
+            <form class="form-signin">
+                <div class="form-label-group emlabel">
+                    <label for="inputEmail">Email address</label>
+                    <input type="loginEmail" id="loginEmail" class="form-control inputboxone" placeholder="Email address" required autofocus>
+                </div>
+                <div class="form-label-group pwlabel">
+                    <label for="inputPassword">Password</label>
+                    <input type="inputpassword" id="inputPassword" class="form-control inputboxtwo" placeholder="Password" required>
+                </div>
+                <button class="btn btn-md btn-primary text-uppercase signin" type="submit">Sign in</button>   
+            </form>
+        </div>  
+    </div>
+
+    <!--registertext-->
+    <div id ="registertextdiv" class = "propsthree">
+        <div class = "bigthree">
+            <p>
+                signup
+            </p>
+        </div>
+
+        <div class = "smallthree">            
+            <form class="form-signin">
+                <div class="form-label-group emlabel">
+                    <label for="registerEmail">Email address</label>
+                    <input type="registeremail" id="inputEmail" class="form-control inputboxone" placeholder="Email address" required autofocus>
+                </div>
+                <div class="form-label-group pwlabel">
+                    <label for="registerUsername">Username</label>
+                    <input type="registerusername" id="inputEmail" class="form-control inputboxtwo" placeholder="Username" required autofocus>
+                </div>
+                <div class="form-label-group pwlabel2">
+                    <label for="inputPassword">Password</label>
+                    <input type="registerpassword" id="RegisterPassword" class="form-control inputboxthree" placeholder="Password" required>
+                </div>
+                <button class="btn btn-md btn-primary text-uppercase signin2" type="submit">Signup</button>   
+            </form>
+        </div>  
+    </div>
+     <!--Audio-->
+     <audio loop id="bgm">
+        <source src = "static/Thread.m4a" type="audio/mpeg">
+    </audio>
+</div>
+
+
+<!--Navbar-->
+
+<div id="abc" class ="navbardiv">
+        <nav class="navbar navbar-dark navbar-expand-xl" id="navbar">
+                <a class="navbar-brand mr-3" href="#">Lyra</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div id="navbarNavDropdown" class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li id = "home" class="nav-item ml-2 mr-2 active">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li id = "about" class="nav-item mx-2">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+           
+                <ul class="navbar-nav">
+                    <li id = "login" class="nav-item pl-2">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li id = "register" class="nav-item pl-2">
+                        <a class="nav-link" href="#">Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </nav> 
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+    particlesJS.load('particles-js', '/static/particles.json', function() {
+            console.log('callback - particles.js config loaded');
+          });
+    </script>
+    </body>
+</html>
+    
+

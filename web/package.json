@@ -17,5 +17,5 @@
     "start": "nodemon app.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }
