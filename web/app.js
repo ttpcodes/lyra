@@ -7,6 +7,9 @@ app.use('/static', express.static('public'));
 app.get('/', function(req,res){
     res.sendFile('index.html', {root:'public/views'});
 });
+app.get('/game', function(req,res){
+    res.sendFile('game.html', {root:'public/views'});
+});
 
 
 
