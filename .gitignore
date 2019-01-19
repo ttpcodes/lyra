@@ -1,3 +1,6 @@
 node_modules/
+vendor/
 
+ab0x.go
+.DS_Store
 unnamed
