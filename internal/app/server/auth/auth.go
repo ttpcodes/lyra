@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/authboss"
 	"github.com/volatiletech/authboss/defaults"
@@ -20,7 +21,12 @@ func CreateAuth(storer UserStorer) {
 	ab.Config.Paths.Mount = "/auth"
 	ab.Config.Storage.CookieState = abclientstate.NewCookieStorer([]byte("hentai"), nil)
 	ab.Config.Storage.Server = storer
-	ab.Config.Storage.SessionState = abclientstate.NewSessionStorer("unnamed", []byte("hentai"), nil)
+	sessionStore := abclientstate.NewSessionStorer("unnamed", []byte("hentai"), nil)
+	ab.Config.Storage.SessionState = sessionStore
+
+	cstore := sessionStore.Store.(*sessions.CookieStore)
+	cstore.Options.HttpOnly = false
+	cstore.Options.Secure = false
 
 	// For some reason defaults needs to be placed here. Not going to question it.
 	defaults.SetCore(&ab.Config, true, false)
@@ -40,7 +46,6 @@ func CreateAuth(storer UserStorer) {
 		Required: true,
 	}
 	ab.Config.Core.BodyReader = defaults.HTTPBodyReader{
-		ReadJSON: true,
 		Rulesets: map[string][]defaults.Rules{
 			"register": {emailRule, passwordRule, usernameRule},
 		},

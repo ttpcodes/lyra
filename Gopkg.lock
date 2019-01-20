@@ -131,11 +131,13 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:f8b491a7c25030a895a0e579742d07136e6958e77ef2d46e769db8eec4e58fcd"
+  digest = "1:f932ebfe898d2d4dec0bc225da780f1fad186c06ee28cd85e7846992b6f61da4"
   name = "golang.org/x/net"
   packages = [
     "context",
     "context/ctxhttp",
+    "webdav",
+    "webdav/internal/xml",
   ]
   pruneopts = "UT"
   revision = "915654e7eabcea33ae277abbecf52f0d8b7a9fdc"
@@ -183,6 +185,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/gorilla/mux",
+    "github.com/gorilla/sessions",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
     "github.com/sirupsen/logrus",
@@ -191,6 +194,7 @@
     "github.com/volatiletech/authboss/auth",
     "github.com/volatiletech/authboss/defaults",
     "github.com/volatiletech/authboss/register",
+    "golang.org/x/net/webdav",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
