@@ -1,9 +1,13 @@
 all: deps build
 
-build:
+build: frontend
 	go build cmd/unnamed.go
 
 deps:
 	dep ensure
 
-.PHONY: all build deps
+frontend:
+	cd web && npm run build
+	fileb0x web.json
+
+.PHONY: all build deps frontend

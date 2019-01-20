@@ -4,7 +4,9 @@ import (
 	"context"
 	"github.com/gorilla/mux"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/web"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/authboss"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,7 +21,24 @@ func CreateRouter() {
 	r := mux.NewRouter()
 	r.Use(ab.LoadClientStateMiddleware)
 
+	fs := http.FileServer(web.HTTP)
+
 	r.PathPrefix("/auth").Handler(http.StripPrefix("/auth", ab.Config.Core.Router))
+
+	s := r.PathPrefix("/game.html").Subrouter()
+	s.Use(ab.LoadClientStateMiddleware)
+	s.Use(authboss.Middleware2(ab, authboss.RequireNone, authboss.RespondUnauthorized))
+	game, err := web.ReadFile("game.html")
+	if err != nil {
+		logrus.Fatal("Error when loading game file:\n", err)
+	}
+	s.HandleFunc("", func (w http.ResponseWriter, r *http.Request) {
+		if _, err := w.Write(game); err != nil {
+			logrus.Error("Error when serving game route:\n", err)
+		}
+	})
+
+	r.PathPrefix("/").Handler(fs)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:80",
