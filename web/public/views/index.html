@@ -74,14 +74,14 @@
         </div>
 
         <div class = "smallthree">            
-            <form class="form-signin">
+            <form class="form-signin" method="post" action="/auth/login">
                 <div class="form-label-group emlabel">
                     <label for="inputEmail">Email address</label>
-                    <input type="loginEmail" id="loginEmail" class="form-control inputboxone" placeholder="Email address" required autofocus>
+                    <input type="loginEmail" id="loginEmail" name="email" class="form-control inputboxone" placeholder="Email address" required autofocus>
                 </div>
                 <div class="form-label-group pwlabel">
                     <label for="inputPassword">Password</label>
-                    <input type="inputpassword" id="inputPassword" class="form-control inputboxtwo" placeholder="Password" required>
+                    <input type="inputpassword" id="inputPassword" name="password" class="form-control inputboxtwo" placeholder="Password" required>
                 </div>
                 <button class="btn btn-md btn-primary text-uppercase signin" type="submit">Sign in</button>   
             </form>
