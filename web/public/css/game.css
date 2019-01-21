@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Nova+Square');
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+@import url('https://fonts.googleapis.com/css?family=Rajdhani');
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.ui {
+    background-color: #333355;
+    opacity: 0.8;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    min-width: 300px;
+    max-width:300px;
+    height: 100%;
+    width:30%;
+}
+.accordian{
+    width:100%;
+    border:0px;
+    outline:  none;
+    background-color: #AAAAAA;
+    font-size: 30px;
+    font-family: 'Nova Square', cursive;  
+    font-family: 'Major Mono Display', monospace;
+    font-weight: bold;
+    transition: background-color 0.2s linear;
+    cursor:pointer;
+}
+
+button.accordian:hover {
+    background-color: #DDDDDD;
+}
+.accordian-content{
+    width: 100%;
+    padding-left: 5px;
+    padding-right:5px;
+    font-family: 'Nova Square', cursive;  
+    font-family: 'Major Mono Display', monospace;
+    font-size: 20px; 
+    color: #DDDDDD;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+    border: 7px black;
+    
+}
+
+
