@@ -1,34 +1,57 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/models"
 	"github.com/sirupsen/logrus"
-	"sync"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var db *gorm.DB
-var once sync.Once
+
+func CreateDatabase() *gorm.DB {
+	host := "localhost"
+	connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host,
+		"5432", "unnamed", "unnamed", "unnamed")
+	newDb, err := gorm.Open("postgres", connString)
+	db = newDb
+	if err != nil {
+		logrus.Fatal("Error on connecting to database:\n", err)
+	}
+	logrus.Infof("Connected to database at %s.", host)
+	db.Model(&models.Media{})
+	db.Model(&models.User{}).Related(&models.Media{}, "Medias")
+	db.AutoMigrate(&models.Media{})
+	db.AutoMigrate(&models.User{})
+	logrus.Debugf("Ran User model migration.")
+	return db
+}
 
 func GetDatabase() *gorm.DB {
-	once.Do(func() {
-		host := "localhost"
-		connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host,
-			"5432", "unnamed", "unnamed", "unnamed")
-		newDb, err := gorm.Open("postgres", connString)
-		db = newDb
-		if err != nil {
-			logrus.Fatal("Error on connecting to database:\n", err)
-		}
-		logrus.Infof("Connected to database at %s.", host)
-		db.Model(&models.Media{})
-		db.Model(&models.User{}).Related(&models.Media{}, "Media")
-		db.AutoMigrate(&models.Media{})
-		db.AutoMigrate(&models.User{})
-		logrus.Debugf("Ran User model migration.")
-	})
 	return db
+}
+
+func AddMedia(media models.Media) {
+	database := GetDatabase()
+	database.Create(&media)
+}
+
+func GetMedia(id string) (models.Media, error) {
+	database := GetDatabase()
+	var media []models.Media
+	database.Where(models.Media{ID: id}).First(&media)
+	if len(media) > 0 {
+		return media[0], nil
+	}
+	return models.Media{}, errors.New("media not found in database")
+}
+
+func AppendMediaUser(media models.Media, user models.User) {
+	GetDatabase().Model(&user).Association("Medias").Append(&media)
+}
+
+func RemoveMediaUser(media models.Media, user models.User) {
+	GetDatabase().Model(&user).Association("Medias").Delete(&media)
 }

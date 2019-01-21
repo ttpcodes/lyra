@@ -25,7 +25,7 @@ func main() {
 	}
 	youtube.CreateYouTubeLoader(key)
 
-	database := db.GetDatabase()
+	database := db.CreateDatabase()
 	storer := auth.CreateStorer(database)
 	auth.CreateAuth(storer)
 	stores.CreateNodeStore()

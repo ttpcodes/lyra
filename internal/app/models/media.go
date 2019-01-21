@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Media struct {
 	ID string `gorm:"primary_key"`
