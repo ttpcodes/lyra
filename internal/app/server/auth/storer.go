@@ -39,7 +39,7 @@ func (u UserStorer) Load(ctx context.Context, key string) (authboss.User, error)
 		Email: key,
 	}
 	var user []models.User
-	u.db.Where(query).First(&user)
+	u.db.Where(query).Preload("Medias").First(&user)
 	if len(user) > 0 {
 		return &user[0], nil
 	}
