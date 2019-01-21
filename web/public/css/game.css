@@ -28,6 +28,7 @@ body {
     font-weight: bold;
     transition: background-color 0.2s linear;
     cursor:pointer;
+    border: 0.5px solid black;
 }
 
 button.accordian:hover {
@@ -35,8 +36,7 @@ button.accordian:hover {
 }
 .accordian-content{
     width: 100%;
-    padding-left: 5px;
-    padding-right:5px;
+   
     font-family: 'Nova Square', cursive;  
     font-family: 'Major Mono Display', monospace;
     font-size: 20px; 
@@ -44,8 +44,32 @@ button.accordian:hover {
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.2s ease-in-out;
-    border: 7px black;
+    padding-left:2px;
+    padding-right:2px;
     
 }
 
+.mapimg{
+    height:296px;
+    width:300px;
+    position: relative;
+}
 
+ th.song{
+    width: 200px;
+    height: 30px;
+    border: 1px solid #000;
+    overflow: hidden;
+    line-height: 30px;
+    padding: 5px;
+    
+  }
+  th.song span {
+    position: absolute;
+    white-space: nowrap;
+    transform: translateX(0);
+    transition: 1s;
+  }
+  th.song:hover{
+    transform: translateX(calc(200px - 100%));
+  }
