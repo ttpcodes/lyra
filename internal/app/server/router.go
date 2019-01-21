@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/gorilla/mux"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/node"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/player"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/web"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/authboss"
@@ -25,9 +27,18 @@ func CreateRouter() {
 
 	r.PathPrefix("/auth").Handler(http.StripPrefix("/auth", ab.Config.Core.Router))
 
+	a := authboss.Middleware2(ab, authboss.RequireNone, authboss.RespondUnauthorized)
+
+	n := r.PathPrefix("/nodes").Subrouter()
+	n.Use(a)
+	n.PathPrefix("/{id}").HandlerFunc(node.ShowHandler)
+
+	p := r.PathPrefix("/players").Subrouter()
+	p.Use(a)
+	p.PathPrefix("").HandlerFunc(player.IndexHandler)
+
 	s := r.PathPrefix("/game.html").Subrouter()
-	s.Use(ab.LoadClientStateMiddleware)
-	s.Use(authboss.Middleware2(ab, authboss.RequireNone, authboss.RespondUnauthorized))
+	s.Use(a)
 	game, err := web.ReadFile("game.html")
 	if err != nil {
 		logrus.Fatal("Error when loading game file:\n", err)
