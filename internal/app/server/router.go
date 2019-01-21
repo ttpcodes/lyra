@@ -6,6 +6,7 @@ import (
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/node"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/player"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/ws/routes"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/web"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/authboss"
@@ -36,6 +37,10 @@ func CreateRouter() {
 	p := r.PathPrefix("/players").Subrouter()
 	p.Use(a)
 	p.PathPrefix("").HandlerFunc(player.IndexHandler)
+
+	w := r.PathPrefix("/ws").Subrouter()
+	w.Use(a)
+	w.PathPrefix("/game").HandlerFunc(routes.WebsocketGameHandler)
 
 	s := r.PathPrefix("/game.html").Subrouter()
 	s.Use(a)

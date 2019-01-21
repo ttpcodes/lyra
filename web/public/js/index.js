@@ -19,8 +19,11 @@ function toggleAudio() {
     bgm.muted = true;
     mutebutton.className = "fas fa-volume-mute fa-2x";
   }
- 
 }
+
+$('.navbar-nav>li>a').on('click', function(){
+  $('.navbar-collapse').collapse('hide');
+});
 
 onkeypress = function(){
   if (counter == 0){ 
@@ -80,32 +83,33 @@ function updatescreen(){
   var abouttextdiv = document.getElementById("abouttextdiv");
   var logintextdiv = document.getElementById("logintextdiv");
   var registertextdiv = document.getElementById("registertextdiv");
+  var login = document.getElementById("login");
+  var home = document.getElementById("home");
+  var about = document.getElementById("about");
+  var register = document.getElementById("register");
+  hometextdiv.className = "props";
+  abouttextdiv.className = "propstwo";
+  logintextdiv.className = "propsthree";
+  registertextdiv.className = "propsthree";
+  home.classList.remove("active");
+  about.classList.remove("active");
+  login.classList.remove("active");
+  register.classList.remove("active");
+
   if (state==1){
-    hometextdiv.className = "props";
-    abouttextdiv.className = "propstwo";
-    logintextdiv.className = "propsthree";
-    registertextdiv.className = "propsthree";
     hometextdiv.className = "animated fadeInDown slower props appear";
+    home.classList.add("active");
   } 
-  if (state ==2){
-    hometextdiv.className = "props";
-    abouttextdiv.className = "propstwo";
-    logintextdiv.className = "propsthree";
-    registertextdiv.className = "propsthree";
+  if (state ==2){ 
     abouttextdiv.className = "animated fadeInDown slower propstwo appear";
+    about.classList.add("active");
   }
-  if (state ==3){
-    hometextdiv.className = "props";
-    abouttextdiv.className = "propstwo";
-    logintextdiv.className = "propsthree";
-    registertextdiv.className = "propsthree";
+  if (state ==3){ 
     logintextdiv.className = "animated fadeInDown slower propsthree appear";
+    login.classList.add("active");
   }
   if (state ==4){
-    hometextdiv.className = "props";
-    abouttextdiv.className = "propstwo";
-    logintextdiv.className = "propsthree";
-    registertextdiv.className = "propsthree";
     registertextdiv.className = "animated fadeInDown slower propsthree appear";
+    register.classList.add("active");
   }
 }

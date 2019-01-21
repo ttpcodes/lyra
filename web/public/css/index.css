@@ -204,7 +204,13 @@ I .background {
 }
 
 .navbar a:hover {
-  color:rgba(168, 230, 245, 0.979);
+  color:rgba(168, 230, 245, 0.979) !important;
+}
+
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+color:  rgba(168, 230, 245, 0.979) ;
 }
 
 .props {
@@ -395,6 +401,19 @@ input[type="password"]:focus {
   padding-top: 2px;
   padding-bottom: 0px;
 }
+
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand {color: rgba(0, 0, 0, 0);}
+
+
+
+  @media (max-width: 1200px)  {
+    .navbar-collapse {
+      background-color: rgba(33, 33, 33, 0.95);
+      border-color: rgba(60,60,80,1);
+      margin:0px;
+      padding:0px;
+      }
+ }
 
 .appear {
 visibility: visible;
