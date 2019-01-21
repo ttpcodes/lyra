@@ -10,12 +10,14 @@
 			position: absolute;
 		    display: block;
 		    z-index: 99;
-		    left: 80%;
+		    left: 70%;
+			width: 30%;
 		    top: 10%;
 			min-width: 100px;
 			min-height: 500px;
 		}
 	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<head>
 		<meta charset=utf-8>
 		<title>rEEEEEEEEEEE</title>
@@ -28,7 +30,25 @@
 	</body>
 	<div id="game"></div>
 	<div class="ui">
-		<span id="name">name</span>
+		<span id="name">Nothing Playing. Move to a music node to start!</span>
+		<br>
+		<span id="time">0:00 / 0:00</span>
+		<div class="slidecontainer">
+			<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
+		</div>
+		<button id="skip" onclick="skip()">Skip</button>
+		<hr>
+		Queue a song to node:
+		<input id="queue_input"></input>
+		<button id="queue" onclick="queueMusicNode()">Queue</button>
+		<hr>
+		<table id="nodeplaylist"></table>
+		<hr>
+		Add song to collection:
+		<input id="queue_input_mine"></input>
+		<button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
+		<hr>
+		<table id="myplaylist"></table>
 	</div>
 	<iframe id="existing-iframe-example"
         width="640" height="360"
@@ -36,6 +56,7 @@
         frameborder="0"
         style="border: solid 4px #37474F"></iframe>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<audio id="youtube" autoplay controls loop></audio>
 	<script src="static/js/mousetrap.min.js"></script>
 	<script src="static/js/three.js"></script>
