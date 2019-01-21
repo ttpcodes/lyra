@@ -97,18 +97,18 @@
         </div>
 
         <div class = "smallthree">            
-            <form class="form-signin">
+            <form class="form-signin" action="/auth/register" method="post">
                 <div class="form-label-group emlabel">
                     <label for="registerEmail">Email address</label>
-                    <input type="registeremail" id="inputEmail" class="form-control inputboxone" placeholder="Email address" required autofocus>
+                    <input type="registeremail" id="inputEmail" class="form-control inputboxone" placeholder="Email address" required autofocus name="email">
                 </div>
                 <div class="form-label-group pwlabel">
                     <label for="registerUsername">Username</label>
-                    <input type="registerusername" id="inputEmail" class="form-control inputboxtwo" placeholder="Username" required autofocus>
+                    <input type="registerusername" id="inputEmail" class="form-control inputboxtwo" placeholder="Username" required autofocus name="username">
                 </div>
                 <div class="form-label-group pwlabel2">
                     <label for="inputPassword">Password</label>
-                    <input type="registerpassword" id="RegisterPassword" class="form-control inputboxthree" placeholder="Password" required>
+                    <input type="registerpassword" id="RegisterPassword" class="form-control inputboxthree" placeholder="Password" required name="password">
                 </div>
                 <button class="btn btn-md btn-primary text-uppercase signin2" type="submit">Signup</button>   
             </form>
