@@ -1,4 +1,4 @@
-package db
+package models
 
 import (
 	"github.com/jinzhu/gorm"
@@ -6,12 +6,16 @@ import (
 )
 
 type User struct {
-	authboss.User
-	gorm.Model
+	authboss.User `json:"-"`
+	gorm.Model `json:"-"`
 
-	Email string `gorm:"not null;unique"`
-	Password string `gorm:"not null"`
+	Email string `gorm:"not null;unique" json:"-"`
+	Password string `gorm:"not null" json:"-"`
 	Username string `gorm:"not null;unique"`
+
+	Medias []Media `gorm:"many2many:medias_users;"`
+
+	Node Node `gorm:"-"`
 }
 
 func (u User) GetArbitrary() map[string]string {
