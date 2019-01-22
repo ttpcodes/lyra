@@ -30,4 +30,10 @@ func (c QueueCommand) Handle(client Client) {
 	}
 	client.User.Node.AddMedia(media)
 	logrus.Infof("Added media ID %s to node %d", c.ID, client.User.Node.ID)
+	response, err := CreateNodeUpdateResponse(client.User.Node)
+	if err != nil {
+		logrus.Error("Error generating WS response:\n", err)
+		return
+	}
+	client.Hub.Broadcast <- response
 }
