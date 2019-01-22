@@ -33,10 +33,10 @@
 	        <!--node-->
 	        <button class ='accordian' id="nodebutton"> node</button>
 	        <div class = "accordian-content" id="node">
-				<div id="nodetable">
-					 Nothing here! Move to a music node with arrow keys to hear some music.
-				</div>
-				<input id="queue_input"></input>
+				<table class = "playlist" id="nodetable">
+					<tr><td>Nothing here! Move to a music node with arrow keys to hear some music.</td></tr>
+	            </table>
+				<input id="queue_input" value="https://www.youtube.com/watch?v=gzkfzOmr0JQ"></input>
 				<button id="queue" onclick="queueMusicNode()">Add</button>
 	        </div>
 	        <!--playlist-->
@@ -68,13 +68,20 @@
 	            <!---extras-->
 	                <!--end extras-->
 	            </table>
-	            <div class = "addCollection">
+	            <!-- <div class = "addCollection">
 	                    Add song to collection:
 	                    <input id="queue_input_mine"></input>
 	                    <button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
 	                    <hr>
 	                    <table id="myplaylist"></table>
-	            </div>
+	            </div> -->
+				<form>
+		            <div class = "addCollection">
+		            	<input type="text" id="queue_input_mine" name="musicAdd" value="https://www.youtube.com/watch?v=gzkfzOmr0JQ" placeholder="Youtube-URL"></input>
+		            	<span onclick="queueMyPlaylist()">ADD</span>
+					</div>
+
+		        </form>
 
 	        </div>
 	    </div>

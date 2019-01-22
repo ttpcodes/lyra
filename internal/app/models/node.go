@@ -39,6 +39,8 @@ func (n *Node) Run() {
 }
 
 func (n *Node) Next() {
-	n.Playlist = n.Playlist[1:]
-	n.CurrentTime = 0
+	if len(n.Playlist) > 0 {
+		n.Playlist = n.Playlist[1:]
+		n.CurrentTime = 0
+	}
 }
