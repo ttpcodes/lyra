@@ -5,14 +5,16 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/constants"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/models"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 var db *gorm.DB
 
 func CreateDatabase() *gorm.DB {
-	host := "localhost"
+	host := viper.GetString(constants.DB_HOST)
 	connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host,
 		"5432", "unnamed", "unnamed", "unnamed")
 	newDb, err := gorm.Open("postgres", connString)
