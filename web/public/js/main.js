@@ -1,8 +1,8 @@
 // initialize stuff
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth-300) / window.innerHeight, 0.1, 30 );
+var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth) / window.innerHeight, 0.1, 30 );
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize( (window.innerWidth-300) * 1, window.innerHeight*1 );
+renderer.setSize( (window.innerWidth) * 1, window.innerHeight*1 );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.shadowMap.soft = true;

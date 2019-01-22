@@ -12,7 +12,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <link href ="/static/css/game.css" rel = "stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		<link href ="/static/css/game.css" rel = "stylesheet">
+
 	</head>
 	<body scroll="no" style="overflow: hidden">
 	</body>
@@ -20,24 +22,58 @@
 	<div id="game"></div>
 	<!-- UI -->
 	<div class="ui">
-		<div class = "menu">
+		<div class = "menu" >
+			<!--map-->
 			<button class ='accordian' id="mapbutton"> map </button>
 			<div class = "accordian-content" id="map">
-				<div>
-					High Quality Content
+				<div> 
+					<img src="static/img/DummyMap.png" alt="mapimg" class = "mapimg">
 				</div>
 			</div>
+			<!--node-->
 			<button class ='accordian' id="nodebutton"> node</button>
 			<div class = "accordian-content" id="node">
-				<div>
-					Add song to collection:
-					<input id="queue_input_mine"></input>
-					<button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
-					<hr>
-					<table id="myplaylist"></table>
-				</div>
 			</div>
+			<!--playlist-->
 			<button class ='accordian' id = "playlistbutton"> playlist </button>
+			
+			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
+					
+				
+				<table class = "playlist" >
+				<tr class = "songrow">
+						<td class = 'trash'>
+								<i class="fas fa-trash-alt" style = "position:relative;"></i>
+							</td> 
+					<td class = 'button'>
+						<i class="fas fa-plus" style = "position:relative;"></i>
+					</td> 
+					
+					<td class ='song'>
+						Song title very long indeed what would i ever do with us holy moly
+					</td>
+					
+					
+				</tr>
+				<!---extras-->
+				
+				
+			
+					<!--end extras-->
+				</table>
+				<div class = "addCollection">
+						Add song to collection:
+						<!--<input id="queue_input_mine"></input>
+						<button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
+						<hr>
+						<table id="myplaylist"></table>-->
+				</div>
+			
+			</div>
+
+			
+
+			<!--<button class ='accordian' id = "playlistbutton"> playlist </button>
 			<div class = "accordian-content" id = "playlist">
 				<div>
 					Queue a song to node:
@@ -60,14 +96,14 @@
 			<button id="skip" onclick="skip()">Skip</button>
 			<hr>
 		</div>
-	</div>
+	</div> 
 
-	<!--
+	
 	<iframe id="existing-iframe-example"
         width="640" height="360"
         src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
         frameborder="0"
-        style="border: solid 4px #37474F"></iframe>-->
+        style="border: solid 4px #37474F"></iframe>--> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<audio id="youtube" autoplay controls loop></audio>
