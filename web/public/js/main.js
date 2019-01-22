@@ -1,8 +1,8 @@
 // initialize stuff
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth-300) / window.innerHeight, 0.1, 30 );
+var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth) / window.innerHeight, 0.1, 30 );
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize( (window.innerWidth-300) * 1, window.innerHeight*1 );
+renderer.setSize( (window.innerWidth) * 1, window.innerHeight*0.5 );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.shadowMap.soft = true;
@@ -43,11 +43,20 @@ var video_id = "None";
 var current_time;
 var my_playlist;
 
+var socket = new WebSocket((window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.hostname + '/ws/queue')
+socket.addEventListener('close', () => {})
+socket.addEventListener('error', () => {})
+socket.addEventListener('message', (event) => {
+    const message = JSON.parse(event.data)
+})
+
 
 function nothing() {}
 function doneMoving() {
     moving = false;
 }
+
+console.log("?");
 
 // animation engine
 var animations = []
@@ -461,13 +470,6 @@ function move(direction) {
             animations.push(new Animation("gaussian", camera, 80, "position", "x", nodes[path.other][0]*2 + 1.5, doneMoving));
             animations.push(new Animation("gaussian", camera, 80, "position", "y", nodes[path.other][1]*2 + 1.5 - 3.5, doneMoving));
             updateNodeData()
-            refreshNodePlaylist();
-            if(ready) {
-                beginNewSong();
-            }
-            else {
-                need_play = true;
-            }
         }
     }
 }
@@ -510,13 +512,10 @@ function myPlaylist() {
 
 // make this async
 function updateNodeData() {
-    current_playlist = nodePlaylist();
-    video_time = songAtNode().time;
-    video_name = songAtNode().name;
-    video_id = songAtNode().id;
-    current_time = timeAtNode();
-    my_playlist = myPlaylist();
-    refreshMyPlaylist();
+    current_playlist = []
+    $.get("/nodes/"+curr_node, function( data ) {
+        console.log(data);
+    });
 }
 updateNodeData()
 
@@ -571,7 +570,7 @@ setInterval(function(){
 
 function beginNewSong() {
     $("#name").html("Now loading: " + video_name);
-    // player.loadVideoById(video_id, current_time);
+    player.loadVideoById(video_id, current_time);
 }
 
 function refreshNodePlaylist() {
@@ -605,6 +604,7 @@ function queueMusicNode() {
     if(ampersandPosition != -1) {
         vid_id = vid_id.substring(0, ampersandPosition);
     }
+    socket.send()
     current_playlist.push({name: "(Retrieving name...)",
     id: vid_id,
     time: 300})

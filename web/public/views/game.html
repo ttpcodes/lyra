@@ -30,16 +30,6 @@
 			<button class ='accordian' id="nodebutton"> node</button>
 			<div class = "accordian-content" id="node">
 				<div>
-					Add song to collection:
-					<input id="queue_input_mine"></input>
-					<button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
-					<hr>
-					<table id="myplaylist"></table>
-				</div>
-			</div>
-			<button class ='accordian' id = "playlistbutton"> playlist </button>
-			<div class = "accordian-content" id = "playlist">
-				<div>
 					Queue a song to node:
 					<input id="queue_input"></input>
 					<button id="queue" onclick="queueMusicNode()">Queue</button>
@@ -48,9 +38,19 @@
 					<hr>
 				</div>
 			</div>
+			<button class ='accordian' id = "playlistbutton"> playlist </button>
+			<div class = "accordian-content" id = "playlist">
+				<div>
+					Add song to collection:
+					<input id="queue_input_mine"></input>
+					<button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
+					<hr>
+					<table id="myplaylist"></table>
+				</div>
+			</div>
 		</div>
 
-		<div class = musicplayer>
+		<div class="musicplayer">
 			<span id="name">Nothing Playing. Move to a music node to start!</span>
 			<br>
 			<span id="time">0:00 / 0:00</span>
@@ -62,12 +62,12 @@
 		</div>
 	</div>
 
-	<!--
+
 	<iframe id="existing-iframe-example"
         width="640" height="360"
         src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
         frameborder="0"
-        style="border: solid 4px #37474F"></iframe>-->
+        style="border: solid 4px #37474F"></iframe>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<audio id="youtube" autoplay controls loop></audio>
@@ -75,5 +75,5 @@
 	<script src="static/js/three.js"></script>
 	<script src="static/js/helpers.js"></script>
 	<script src="static/js/main.js"></script>
-	<script src = "static/js/accordian.js"></script>
+	<script src ="static/js/accordian.js"></script>
 </html>
