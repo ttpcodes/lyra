@@ -552,7 +552,7 @@ function updateNodeData(force_update) {
         if(current_playlist.length == 0) {
             video_id = "None";
         }
-        else (force_update || video_id != current_playlist[0]["ID"]){
+        else if(force_update || video_id != current_playlist[0]["ID"]){
             video_id = current_playlist[0]["ID"];
             video_time = current_playlist[0]["Length"];
             video_name = current_playlist[0]["Title"];
@@ -618,22 +618,32 @@ function beginNewSong() {
 }
 
 function refreshNodePlaylist() {
-    var new_html = "";
-    var playlist = current_playlist;
-    for(var i = 1; i < playlist.length; i++) {
-        new_html += "<tr><td> " + playlist[i]["Title"] + " [" + timeToString(playlist[i]["Length"]) + "]</td></tr>";
+    if(curr_node == 4) {
+        $("#nodetable").html("Nothing here! Move to a music node with arrow keys to hear some music.")
     }
-    $("#nodeplaylist").html(new_html);
+    else {
+        var new_html = "";
+        var playlist = current_playlist;
+        for(var i = 1; i < playlist.length; i++) {
+            new_html += "<tr><td> " + playlist[i]["Title"] + " [" + timeToString(playlist[i]["Length"]) + "]</td></tr>";
+        }
+        if(playlist.length <= 1) {
+            $("#nodetable").html("Nothing in the queue! Add a song to play it.");
+        }
+        else {
+            $("#nodetable").html(new_html);
+        }
+    }
 }
 
 function refreshMyPlaylist() {
     var new_html = "";
     var playlist = my_playlist;
     for(var i = 0; i < playlist.length; i++) {
-        console.log("ss");
-        new_html += "<tr><td><button onclick='deleteMySong("+i+")'>X</button> " + playlist[i]["Title"] + " [" + timeToString(playlist[i]["Length"]) + "]<button onclick='queueMySong("+i+")'>Queue to Node</button></td></tr>";
+        // console.log("ss");
+        new_html += "<tr class = 'songrow'><td class = 'trash'><i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i></td><td class = 'button'><i onclick='queueMySong("+i+") class='fas fa-plus' style = 'position:relative;'></i></td><td class ='song' onclick='queueMySong("+i+")>"+playlist[i]["Title"]+"</td></tr>"
     }
-    $("#myplaylist").html(new_html);
+    $("#playlisttable").html(new_html);
 }
 
 
@@ -682,12 +692,12 @@ function skip() {
     socket.send(JSON.stringify({"Command": "skip"}))
 }
 function deleteMySong(index) {
-    socket.send(JSON.stringify({"Command": "remove", "ID" my_playlist[index]["ID"]:}))
+    socket.send(JSON.stringify({"Command": "remove", "ID": my_playlist[index]["ID"]}))
     my_playlist.splice(index, 1);
     refreshMyPlaylist();
 
 }
 function queueMySong(index) {
-    socket.send(JSON.stringify({"Command": "remove", "ID" my_playlist[index]["ID"]:}))
+    socket.send(JSON.stringify({"Command": "remove", "ID": my_playlist[index]["ID"]}))
     updateNodeData(true);
 }

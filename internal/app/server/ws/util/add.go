@@ -17,7 +17,7 @@ type AddCommand struct {
 func (c AddCommand) Handle(client Client) {
 	regex := regexp.MustCompile(`(youtu\.be\/|youtube\.com\/(watch\?(.*&)?v=|(embed|v)\/))([^\?&"'>]+)`)
 	res := regex.FindAllStringSubmatch(c.URL, -1)
-	if len(res[0]) > 0 {
+	if len(res) > 0 && len(res[0]) > 0 {
 		media, err := db.GetMedia(res[0][5])
 		if err == nil {
 			db.AppendMediaUser(media, *client.User)
