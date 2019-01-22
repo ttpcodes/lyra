@@ -46,6 +46,12 @@ func WebsocketGameHandler(w http.ResponseWriter, r *http.Request) {
 		logrus.Warn("Error retrieving current user (are they authenticated?:\n", err)
 		return
 	}
+	node, err := stores.GetNodeStore().Get(0)
+	if err != nil {
+		logrus.Error("Error on getting initial node:\n", err)
+		return
+	}
+	user.(*models.User).Node = node
 
 	client := &util.Client{
 		Conn: conn,

@@ -36,6 +36,7 @@ func CreateRouter() {
 
 	p := r.PathPrefix("/players").Subrouter()
 	p.Use(a)
+	p.PathPrefix("/{player}").HandlerFunc(player.ShowHandler)
 	p.PathPrefix("").HandlerFunc(player.IndexHandler)
 
 	w := r.PathPrefix("/ws").Subrouter()

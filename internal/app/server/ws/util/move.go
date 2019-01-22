@@ -20,7 +20,7 @@ func (c MoveCommand) Handle(client Client) {
 		logrus.Warn("Error retrieving the proper node:\n", err)
 		return
 	}
-	client.User.Node = *node
+	client.User.Node = node
 	data, err := json.Marshal(c)
 	if err != nil {
 		logrus.Error("Error generating WebSocket response:\n", err)
