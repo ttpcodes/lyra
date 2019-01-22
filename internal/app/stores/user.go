@@ -1,6 +1,7 @@
 package stores
 
 import (
+	"errors"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/models"
 )
 
@@ -30,4 +31,11 @@ func (s UserStore) All() []models.User {
 		slice = append(slice, *item)
 	}
 	return slice
+}
+
+func (s UserStore) Get(id uint) (*models.User, error) {
+	if val, ok := s.items[id]; ok {
+		return val, nil
+	}
+	return &models.User{}, errors.New("index out of range")
 }
