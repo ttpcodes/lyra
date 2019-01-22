@@ -140,13 +140,17 @@ td.song{
   }
 
 .addCollection{
-    background-color: rgb(25, 33, 105);
+    background-color: rgb(48, 17, 73);
     white-space: nowrap;
     font-size: 20px;
-    font-family: 'Oxygen', sans-serif;
+    font-family: 'Nova Square', cursive;  
     color: #CCC;
     position:sticky;
     bottom: 0px;
     padding:0px;
+    margin:0px;
+    border-top:3px solid rgb(136, 136, 136);
 }
+
+
   
