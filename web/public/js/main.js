@@ -34,6 +34,7 @@ var curr_node = 4;
 
 var ready = false;
 var loaded = false;
+var socket_connected = false;
 
 var other_players = [];
 var current_playlist;
@@ -41,13 +42,43 @@ var video_time;
 var video_name;
 var video_id = "None";
 var current_time;
-var my_playlist;
+var my_playlist = [];
 
-var socket = new WebSocket((window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.hostname + '/ws/queue')
+var socket = new WebSocket((window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.hostname + '/ws/game')
+socket.addEventListener('open', function (event) {
+    socket_connected = true;
+    $.get("/players/me", function( data ) {
+        var msg = JSON.parse(data)
+        console.log(msg)
+        my_playlist = msg["Medias"]
+        if(my_playlist == null) {
+            my_playlist = [];
+        }
+    });
+
+});
 socket.addEventListener('close', () => {})
 socket.addEventListener('error', () => {})
 socket.addEventListener('message', (event) => {
     const message = JSON.parse(event.data)
+    if(message["Command"] == "nodeUpdate") {
+        console.log("nodeupdate");
+        console.log(message["Node"])
+        if(message["Node"]["ID"] == curr_node) {
+            current_playlist = message["Node"]["Playlist"]
+            current_time = message["Node"]["CurrentTime"]
+            if(current_playlist.length == 0) {
+                video_id = "None";
+            }
+            else if(current_playlist[0]["ID"] != video_id) {
+                video_id = current_playlist[0]["ID"];
+                video_time = current_playlist[0]["Length"];
+                video_name = current_playlist[0]["Title"];
+                beginNewSong();
+            }
+            refreshNodePlaylist();
+        }
+    }
 })
 
 
@@ -465,11 +496,12 @@ function move(direction) {
         if(!moving) {
             moving = true;
             curr_node = path.other;
+            socket.send(JSON.stringify({"Command": "move", "Node" :curr_node}))
             animations.push(new Animation("gaussian", player_mesh, 40, "position", "x", nodes[path.other][0]*2 + 1.5, nothing));
             animations.push(new Animation("gaussian", player_mesh, 40, "position", "y", nodes[path.other][1]*2 + 1.5, nothing));
             animations.push(new Animation("gaussian", camera, 80, "position", "x", nodes[path.other][0]*2 + 1.5, doneMoving));
             animations.push(new Animation("gaussian", camera, 80, "position", "y", nodes[path.other][1]*2 + 1.5 - 3.5, doneMoving));
-            updateNodeData()
+            updateNodeData(false)
         }
     }
 }
@@ -511,13 +543,25 @@ function myPlaylist() {
 }
 
 // make this async
-function updateNodeData() {
+function updateNodeData(force_update) {
     current_playlist = []
     $.get("/nodes/"+curr_node, function( data ) {
-        console.log(data);
+        var msg = JSON.parse(data)
+        current_playlist = msg["Playlist"]
+        current_time = msg["CurrentTime"]
+        if(current_playlist.length == 0) {
+            video_id = "None";
+        }
+        else (force_update || video_id != current_playlist[0]["ID"]){
+            video_id = current_playlist[0]["ID"];
+            video_time = current_playlist[0]["Length"];
+            video_name = current_playlist[0]["Title"];
+            beginNewSong();
+        }
+        refreshNodePlaylist();
     });
 }
-updateNodeData()
+updateNodeData(false)
 
 function onPlayerReady(event) {
     console.log("ready");
@@ -576,8 +620,8 @@ function beginNewSong() {
 function refreshNodePlaylist() {
     var new_html = "";
     var playlist = current_playlist;
-    for(var i = 0; i < playlist.length; i++) {
-        new_html += "<tr><td> " + playlist[i].name + " [" + timeToString(playlist[i].time) + "]</td></tr>";
+    for(var i = 1; i < playlist.length; i++) {
+        new_html += "<tr><td> " + playlist[i]["Title"] + " [" + timeToString(playlist[i]["Length"]) + "]</td></tr>";
     }
     $("#nodeplaylist").html(new_html);
 }
@@ -586,7 +630,8 @@ function refreshMyPlaylist() {
     var new_html = "";
     var playlist = my_playlist;
     for(var i = 0; i < playlist.length; i++) {
-        new_html += "<tr><td><button onclick='deleteMySong("+i+")'>X</button> " + playlist[i].name + " [" + timeToString(playlist[i].time) + "]<button onclick='queueMySong("+i+")'>Queue to Node</button></td></tr>";
+        console.log("ss");
+        new_html += "<tr><td><button onclick='deleteMySong("+i+")'>X</button> " + playlist[i]["Title"] + " [" + timeToString(playlist[i]["Length"]) + "]<button onclick='queueMySong("+i+")'>Queue to Node</button></td></tr>";
     }
     $("#myplaylist").html(new_html);
 }
@@ -604,7 +649,7 @@ function queueMusicNode() {
     if(ampersandPosition != -1) {
         vid_id = vid_id.substring(0, ampersandPosition);
     }
-    socket.send()
+    socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
     current_playlist.push({name: "(Retrieving name...)",
     id: vid_id,
     time: 300})
@@ -624,22 +669,25 @@ function queueMyPlaylist() {
     if(ampersandPosition != -1) {
         vid_id = vid_id.substring(0, ampersandPosition);
     }
-    my_playlist.push({name: "(Retrieving name...)",
-    id: vid_id,
-    time: 300})
+    socket.send(JSON.stringify({"Command": "add", "URL" :$("#queue_input_mine").val()}))
+    my_playlist.push({"Title": "(Retrieving name...)",
+    "ID": vid_id,
+    "Length": 300})
     $("#queue_input_mine").val("");
     refreshMyPlaylist();
 }
 
 function skip() {
-    current_time = video_time + 1;
-    refreshNodePlaylist();
+    player.pauseVideo();
+    socket.send(JSON.stringify({"Command": "skip"}))
 }
 function deleteMySong(index) {
+    socket.send(JSON.stringify({"Command": "remove", "ID" my_playlist[index]["ID"]:}))
     my_playlist.splice(index, 1);
     refreshMyPlaylist();
+
 }
 function queueMySong(index) {
-    current_playlist.push(my_playlist[index])
-    refreshNodePlaylist();
+    socket.send(JSON.stringify({"Command": "remove", "ID" my_playlist[index]["ID"]:}))
+    updateNodeData(true);
 }
