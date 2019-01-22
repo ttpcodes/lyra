@@ -1,15 +1,48 @@
 // initialize stuff
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth) / window.innerHeight, 0.1, 30 );
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth * 1, window.innerHeight );
+renderer.setSize( (window.innerWidth) * 1, window.innerHeight*1 );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.shadowMap.soft = true;
 document.getElementById( 'game' ).appendChild( renderer.domElement );
+window.addEventListener( 'resize', onWindowResize, false );
+function onWindowResize(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+var tag = document.createElement('script');
+tag.id = 'iframe-demo';
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var player;
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('existing-iframe-example', {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onStateChange,
+        }
+    });
+}
 var clock = new THREE.Clock();
 var moving = false;
-var curr_node = 0;
+var need_play = false;
+var curr_node = 4;
+
+var ready = false;
+var loaded = false;
+
+var other_players = [];
+var current_playlist;
+var video_time;
+var video_name;
+var video_id = "None";
+var current_time;
+var my_playlist;
+
 
 function nothing() {}
 function doneMoving() {
@@ -40,17 +73,30 @@ var camera_target_x = 1.5;
 var camera_target_y = -2;
 var camera_target_z = 4;
 
-var am_light = new THREE.AmbientLight(0xAAAAAA, 0.8); // soft white light
-scene.add(am_light);
+var am_light = new THREE.AmbientLight(0xAAAAAA, 0.3); // soft white light
+// scene.add(am_light);
 
 // main light
-var light = new THREE.DirectionalLight( 0xffffff, 0.4, 5000 );
-light.position.set(2, 2, 10); 			//default; light shining from top
+// var light = new THREE.DirectionalLight( 0xffffff, 0.2, 5000 );
+// light.position.set(2, 2, 10); 			//default; light shining from top
+// light.castShadow = true;            // default false
+// light.shadow.mapSize.width = 2048;  // default
+// light.shadow.mapSize.height = 2048; // default
+// light.shadow.camera.near = 2;
+// light.shadow.camera.far = 15;
+// light.shadow.camera.left = -20;
+// light.shadow.camera.right = 20;
+// light.shadow.camera.top = 20;
+// light.shadow.camera.bottom = -20;
+// light.shadow.bias = 0.0001;
+// scene.add(light);
+
+var spin = 0;
+var light = new THREE.PointLight( 0xf83bff, 0.9, 5000 );
+// light.position.set(2, 2, 10); 			//default; light shining from top
 light.castShadow = true;            // default false
 light.shadow.mapSize.width = 2048;  // default
 light.shadow.mapSize.height = 2048; // default
-// light.shadow.camera.near = 0.01;    // default
-// light.shadow.camera.far = 5;     // default
 light.shadow.camera.near = 2;
 light.shadow.camera.far = 15;
 light.shadow.camera.left = -20;
@@ -59,17 +105,60 @@ light.shadow.camera.top = 20;
 light.shadow.camera.bottom = -20;
 light.shadow.bias = 0.0001;
 scene.add(light);
-// var helper = new THREE.CameraHelper( light.shadow.camera );
-// scene.add( helper );
+
+var light2 = new THREE.PointLight( 0x3bdcff, 0.9, 5000 );
+// light.position.set(2, 2, 10); 			//default; light shining from top
+light2.castShadow = true;            // default false
+light2.shadow.mapSize.width = 2048;  // default
+light2.shadow.mapSize.height = 2048; // default
+light2.shadow.camera.near = 2;
+light2.shadow.camera.far = 15;
+light2.shadow.camera.left = -20;
+light2.shadow.camera.right = 20;
+light2.shadow.camera.top = 20;
+light2.shadow.camera.bottom = -20;
+light2.shadow.bias = 0.0001;
+scene.add(light2);
+
+var light3 = new THREE.PointLight( 0x2ecc71, 0.3, 5000 );
+// light.position.set(2, 2, 10); 			//default; light shining from top
+light3.castShadow = true;            // default false
+light3.shadow.mapSize.width = 2048;  // default
+light3.shadow.mapSize.height = 2048; // default
+light3.shadow.camera.near = 2;
+light3.shadow.camera.far = 15;
+light3.shadow.camera.left = -20;
+light3.shadow.camera.right = 20;
+light3.shadow.camera.top = 20;
+light3.shadow.camera.bottom = -20;
+light3.shadow.bias = 0.0001;
+scene.add(light3);
+
+var lightz = new THREE.HemisphereLight( 0x272056, 0xbf5cbe, 0.2 );
+scene.add( lightz );
+
+// light = new THREE.DirectionalLight( 0xff0000, 0.9, 5000 );
+// light.position.set(-10, 2, 10); 			//default; light shining from top
+// light.castShadow = true;            // default false
+// light.shadow.mapSize.width = 2048;  // default
+// light.shadow.mapSize.height = 2048; // default
+// light.shadow.camera.near = 2;
+// light.shadow.camera.far = 15;
+// light.shadow.camera.left = -20;
+// light.shadow.camera.right = 20;
+// light.shadow.camera.top = 20;
+// light.shadow.camera.bottom = -20;
+// light.shadow.bias = 0.0001;
+// scene.add(light);
 
 // build the floor
-var floor_geometry = new THREE.PlaneGeometry(17, 17);
-var floor_material = new THREE.MeshToonMaterial( { color: 0x070826 } );
+var floor_geometry = new THREE.PlaneGeometry(230, 230);
+var floor_material = new THREE.MeshToonMaterial( { color: 0x333333 } );
 var floor_mesh = new THREE.Mesh(floor_geometry, floor_material);
 floor_mesh.position.x = 7.5
 floor_mesh.position.y = 7.5
 floor_mesh.receiveShadow = true;
-// scene.add(floor_mesh)
+scene.add(floor_mesh)
 
 // build the player
 var player_geometry = new THREE.DodecahedronGeometry(0.2);
@@ -87,6 +176,19 @@ nodes.push([3,1]);
 nodes.push([1,5]);
 nodes.push([4,6]);
 nodes.push([6,8]);
+nodes.push([5,0]);//5
+nodes.push([8,6]);
+nodes.push([6,13]);
+nodes.push([8,11]);
+nodes.push([7,16]);
+nodes.push([3,15]); //10
+nodes.push([8,17]);
+nodes.push([12,14]);
+nodes.push([11,9]); //other
+nodes.push([8,3]);
+nodes.push([11,5]); //15
+nodes.push([11,1]);
+nodes.push([12,3]);
 
 var connections = [];
 connections.push([0,1]);
@@ -94,11 +196,29 @@ connections.push([0,2]);
 connections.push([1,3]);
 connections.push([2,3]);
 connections.push([3,4]);
+connections.push([1,5]);
+connections.push([4,6]);
+connections.push([4,7]);
+connections.push([6,8]);
+connections.push([7,8]);
+connections.push([7,9]);
+connections.push([9,10]);
+connections.push([9,11]);
+connections.push([9,12]);
+connections.push([12,13]);
+connections.push([8,13]);
+connections.push([6,13]);
+connections.push([6,14]);
+connections.push([14,15]);
+connections.push([15,16]);
+connections.push([16,17]);
+connections.push([15,17]);
+connections.push([14,16]);
 
-player_mesh.position.x = nodes[0][0]*2 + 1.5;
-player_mesh.position.y = nodes[0][1]*2 + 1.5;
-camera.position.x = nodes[0][0]*2 + 1.5;
-camera.position.y = nodes[0][1]*2 + 1.5 - 3.5;
+player_mesh.position.x = nodes[4][0]*2 + 1.5;
+player_mesh.position.y = nodes[4][1]*2 + 1.5;
+camera.position.x = nodes[4][0]*2 + 1.5;
+camera.position.y = nodes[4][1]*2 + 1.5 - 3.5;
 
 function Path(direction, other) {
     this.direction = direction;
@@ -112,7 +232,7 @@ for(var i = 0; i < nodes.length; i++) {
     var y = nodes[i][1]/3;
     paths.push([]);
     var node_geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.05, 32 )
-    var node_material = new THREE.MeshToonMaterial( { color: 0x85519c } );
+    var node_material = new THREE.MeshToonMaterial( { color: 0xc5ffff } );
     var node = new THREE.Mesh(node_geometry, node_material );
     node.position.x = x*6 + 1.5;
     node.position.y = y*6 + 1.5;
@@ -123,7 +243,7 @@ for(var i = 0; i < nodes.length; i++) {
     scene.add(node);
 
     var node_small_geometry = new THREE.CylinderGeometry(0.4, 0.4, 0.05, 32 )
-    var node_small_material = new THREE.MeshToonMaterial( { color: 0x9e87d5 } );
+    var node_small_material = new THREE.MeshToonMaterial( { color: 0x9ff7d5 } );
     var node_small = new THREE.Mesh(node_small_geometry, node_small_material );
     node_small.position.x = x*6 + 1.5;
     node_small.position.y = y*6 + 1.5;
@@ -133,6 +253,8 @@ for(var i = 0; i < nodes.length; i++) {
     node_small.receiveShadow = true;
     scene.add(node_small);
 }
+
+var connection_locs = [];
 
 // connections
 for(var i = 0; i < connections.length; i++) {
@@ -144,7 +266,7 @@ for(var i = 0; i < connections.length; i++) {
     var second_y = second[1]*2 + 1.5;
     var length = Math.sqrt(Math.pow(first_x - second_x, 2) + Math.pow(first_y - second_y, 2))
     var node_geometry = new THREE.BoxGeometry(0.25, length, 0.025, 32 )
-    var node_material = new THREE.MeshToonMaterial( { color: 0x423040 } );
+    var node_material = new THREE.MeshToonMaterial( { color: 0xaddcb9 } );
     var node = new THREE.Mesh(node_geometry, node_material );
     node.position.x = (first_x + second_x)/2;
     node.position.y = (first_y + second_y)/2;
@@ -154,39 +276,102 @@ for(var i = 0; i < connections.length; i++) {
     paths[connections[i][1]].push(new Path((node.rotation.z + Math.PI) % (Math.PI*2), connections[i][0]));
     node.castShadow = true; //default is false
     node.receiveShadow = true;
+    var deltax = (second_x - first_x) * 0.1;
+    var deltay = (second_y - first_y) * 0.1;
+    for(var x = 0; x < 10; x++) {
+        connection_locs.push([first_x + deltax*x, first_y + deltay*x]);
+    }
     scene.add(node);
 }
 
+for(var k = 0; k < connection_locs.length; k++) {
+    // var building_geometry = new THREE.BoxGeometry(1, 1, 1);
+    // var building_material = new THREE.MeshPhongMaterial( { color: 0x50c44a } );
+    // var building = new THREE.Mesh(building_geometry, building_material );
+    // building.position.x = connection_locs[k][0];
+    // building.position.y = connection_locs[k][1];
+    // building.position.z = 0.5;
+    // scene.add(building);
+}
+
+var buildings = []
+var rots = []
 // buildings
-// for(var x = 0; x < 5; x++) {
-//     for(var y = 0; y < 5; y++) {
-//         var height = 1 + Math.random();
-//         var building_geometry = new THREE.BoxGeometry(0.5, 0.5, height);
-//         var colors = [0x272056, 0x272056, 0x272056, 0x272056, 0x9e87d5, 0x272056, 0x85519c]
-//         var building_material = new THREE.MeshToonMaterial( { color: colors[Math.floor(Math.random() * colors.length)] } );
-//         var building = new THREE.Mesh(building_geometry, building_material );
-//         building.position.x = x*3 + (Math.random()-0.5)*1;
-//         building.position.y = y*3 + (Math.random()-0.5)*1;
-//         building.position.z = height/2;
-//         building.castShadow = true; //default is false
-//         scene.add(building);
-//     }
-// }
+for(var x = -5; x < 30; x++) {
+    for(var y = -5; y < 20; y++) {
+        var height = 1 + Math.random();
+        var colors = [0x5b3568, 0x2d6152, 0x50c44a];
+        for(var i = 0; i < 10; i++) {
+            colors.push(0x5b3568)
+            colors.push(0x5b3568)
+            colors.push(0x5b3568)
+            colors.push(0x2d6152)
+            colors.push(0x50c44a)
+        }
+        for(var i = 0; i < x; i++) {
+            colors.push(0x2d6152)
+            colors.push(0x2d6152)
+            colors.push(0x2d6152)
+        }
+        for(var i = 0; i < y; i++) {
+            colors.push(0x50c44a)
+            colors.push(0x50c44a)
+            colors.push(0x50c44a)
+        }
+        var color = colors[Math.floor(Math.random() * colors.length)];
+        var randx1 = 1.2 + (Math.random()-0.5)*0.4;
+        var randy1 = 1.2 + (Math.random()-0.5)*0.4;
+
+        if(Math.random() < 0.0) {
+        }
+        else {
+            var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
+            var building_material = new THREE.MeshPhongMaterial( { color: color } );
+            var building = new THREE.Mesh(building_geometry, building_material );
+            building.position.x = x*2 + (Math.random()-0.5)*1;
+            building.position.y = y*2 + (Math.random()-0.5)*1;
+            building.position.z = height/2;
+            building.rotation.z = Math.random()*Math.PI
+            // building.rotation.x = Math.random()*Math.PI
+            building.castShadow = true; //default is false
+
+            var ok = true;
+            for(var k = 0; k < connection_locs.length; k++) {
+                if(Math.pow(connection_locs[k][0] - building.position.x, 2) + Math.pow(connection_locs[k][1] - building.position.y, 2) < 2) {
+                    ok = false;
+                }
+            }
+            if(ok) {
+                scene.add(building);
+            }
+            // buildings.push(building);
+            // rots.push([Math.random(), Math.random(), Math.random(), Math.random()*0.5 + 0.3])
+
+            // if(Math.random() < 0.3) {
+            //     var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
+            //     var building_material = new THREE.MeshPhongMaterial( { color: color } );
+            //     var building2 = new THREE.Mesh(building_geometry, building_material );
+            //     building2.position.x = building.position.x + (Math.random()-0.5)*1;
+            //     building2.position.y = building.position.y + (Math.random()-0.5)*1;
+            //     building2.position.z = height/2;
+            //     building2.castShadow = true; //default is false
+            //     scene.add(building2);
+            // }
+        }
+    }
+}
 
 
 function update() {
 	requestAnimationFrame( update );
 	renderer.render( scene, camera );
-    // camera_rotation += 0.01;
-    // camera.position.x -= (camera.position.x - camera_target_x) * 0.1;
-    // camera.position.y -= (camera.position.y - camera_target_y) * 0.1;
-    // camera.position.x = camera_target_x;
-    // camera.position.y = camera_target_y;
-    // camera.position.x = 2*Math.cos(camera_rotation);
-    // camera.position.y = 2*Math.sin(camera_rotation);
-    // camera.rotateOnWorldAxis(new THREE.Vector3(0,0,1), 0.01);
-    // light.position.set(camera.position.x + 2, camera.position.y + 2, camera.position.z + 10);
-    // console.log(moving);
+
+    // for(var i = 0; i < buildings.length; i++) {
+    //     buildings[i].rotation.x += 0.01*rots[i][0]*rots[i][3];
+    //     buildings[i].rotation.y += 0.01*rots[i][1]*rots[i][3];
+    //     buildings[i].rotation.z += 0.01*rots[i][2]*rots[i][3];
+    // }
+
 
     for (var i = animations.length - 1; i >= 0; i--) {
         var anim = animations[i];
@@ -212,9 +397,20 @@ function update() {
             }
         }
     }
+    if(video_id != "None") {
+        $("#time").html(timeToString(current_time) + " / " + timeToString(video_time));
+        $("#timeslider").val((current_time/video_time) * 1000)
+    }
+    var dist = 1;
+    // light.position.set(player_mesh.position.x + Math.sin(spin)*dist, player_mesh.position.y + Math.cos(spin)*dist, player_mesh.position.z);
+    // light2.position.set(player_mesh.position.x + Math.sin(spin + Math.PI*(2/3))*dist, player_mesh.position.y + Math.cos(spin + Math.PI*(2/3))*dist, player_mesh.position.z);
+    // light3.position.set(player_mesh.position.x + Math.sin(spin + Math.PI*(4/3))*dist, player_mesh.position.y + Math.cos(spin + Math.PI*(4/3))*dist, player_mesh.position.z);
+    // spin += 0.01;
+    light2.position.set(player_mesh.position.x + 1, player_mesh.position.y, player_mesh.position.z);
+    light.position.set(player_mesh.position.x - 1, player_mesh.position.y, player_mesh.position.z);
+
 }
 update();
-
 
 function pwd(x) {
     const dividend = Math.E ** -(x ** 2 / (2));
@@ -237,6 +433,9 @@ Mousetrap.bind('down', function() {
 });
 
 function move(direction) {
+    if(!ready) {
+        return;
+    }
     direction = (direction + Math.PI/2) % (Math.PI*2);
     var minimum = -1;
     var path = null;
@@ -252,51 +451,195 @@ function move(direction) {
             path = paths[curr_node][i];
         }
     }
-    // console.log(minimum);
-    // console.log(path);
+
     if(minimum != -1 && minimum < Math.PI/2) {
         if(!moving) {
             moving = true;
             curr_node = path.other;
             animations.push(new Animation("gaussian", player_mesh, 40, "position", "x", nodes[path.other][0]*2 + 1.5, nothing));
             animations.push(new Animation("gaussian", player_mesh, 40, "position", "y", nodes[path.other][1]*2 + 1.5, nothing));
-            animations.push(new Animation("gaussian", camera, 60, "position", "x", nodes[path.other][0]*2 + 1.5, doneMoving));
-            animations.push(new Animation("gaussian", camera, 60, "position", "y", nodes[path.other][1]*2 + 1.5 - 3.5, doneMoving));
-            // beginNewSong();
-            beginNewSong2();
+            animations.push(new Animation("gaussian", camera, 80, "position", "x", nodes[path.other][0]*2 + 1.5, doneMoving));
+            animations.push(new Animation("gaussian", camera, 80, "position", "y", nodes[path.other][1]*2 + 1.5 - 3.5, doneMoving));
+            updateNodeData()
+            refreshNodePlaylist();
+            if(ready) {
+                beginNewSong();
+            }
+            else {
+                need_play = true;
+            }
         }
     }
 }
 
+// PLACEHOLDER SERVER CALLS
 function songAtNode() {
-    return "aalpzhIkmnA";
+    if(curr_node == 4) {
+        return {name: "None",
+        id: "None",
+        time: 10000}
+    }
+    return {name: "Silence",
+    // id: "g4mHPeMGTJM",
+    id: "OCmmr0hCvWU",
+    time: 514}
+}
+function timeAtNode() {
+    return 150;
+}
+function timeToString(time) {
+    return Math.floor(time/60) + ":" + Math.floor(time%60);
+}
+function nodePlaylist() {
+    return [
+        {name: "【東方ボーカル】 「301」 【凋叶棕】【Subbed】",
+        id: "lg0p-XQByog",
+        time: 380},
+        {name: "【東方ボーカル】 「星を廻せ月より速く」 【TUMENECO】",
+        id: "vkFpo4ExHYc",
+        time: 316}
+    ];
+}
+function myPlaylist() {
+    return [
+        {name: "September-san",
+        id: "wUSrmIkR-EE",
+        time: 380}
+    ];
 }
 
-var tag = document.createElement('script');
-tag.id = 'iframe-demo';
-tag.src = 'https://www.youtube.com/iframe_api';
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-var player;
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('existing-iframe-example', {
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onStateChange,
-        }
-    });
+// make this async
+function updateNodeData() {
+    current_playlist = nodePlaylist();
+    video_time = songAtNode().time;
+    video_name = songAtNode().name;
+    video_id = songAtNode().id;
+    current_time = timeAtNode();
+    my_playlist = myPlaylist();
+    refreshMyPlaylist();
 }
+updateNodeData()
+
 function onPlayerReady(event) {
-    console.log("ready")
+    console.log("ready");
+    beginNewSong();
+    ready = true;
 }
+
 function onStateChange(event) {
+    // console.log(event.data);
     if(event.data == 1) {
-        $("#name").html("Now playing: " + songAtNode());
+        $("#name").html("Now playing: " + video_name);
+        var time = player.getDuration();
+        video_time = time;
+        $("#time").html(timeToString(current_time) + " / " + timeToString(video_time));
+        $("#timeslider").val((current_time/video_time) * 1000)
     }
 }
-function beginNewSong2() {
-    $("#name").html("Now loading: " + songAtNode());
-    player.loadVideoById(songAtNode());
-    player.playVideo();
+
+setInterval(function(){
+    current_time += 1;
+    if(current_time > video_time) {
+        console.log(current_playlist.length);
+        for(var i = 0; i < current_playlist.length; i++) {
+            console.log(current_playlist[i]);
+        }
+        current_time = 0;
+        if(current_playlist.length <= 0) {
+            video_time = 10000;
+            video_id = "None";
+            video_name = "None";
+            beginNewSong();
+        }
+        else {
+            video_time = current_playlist[0].time;
+            video_name = current_playlist[0].name;
+            video_id = current_playlist[0].id;
+            beginNewSong();
+        }
+        current_playlist.shift();
+        console.log(current_playlist.length);
+        for(var i = 0; i < current_playlist.length; i++) {
+            console.log(current_playlist[i]);
+        }
+        refreshNodePlaylist();
+    }
+}, 1000);
+
+
+
+
+function beginNewSong() {
+    $("#name").html("Now loading: " + video_name);
+    // player.loadVideoById(video_id, current_time);
+}
+
+function refreshNodePlaylist() {
+    var new_html = "";
+    var playlist = current_playlist;
+    for(var i = 0; i < playlist.length; i++) {
+        new_html += "<tr><td> " + playlist[i].name + " [" + timeToString(playlist[i].time) + "]</td></tr>";
+    }
+    $("#nodeplaylist").html(new_html);
+}
+
+function refreshMyPlaylist() {
+    var new_html = "";
+    var playlist = my_playlist;
+    for(var i = 0; i < playlist.length; i++) {
+        new_html += "<tr><td><button onclick='deleteMySong("+i+")'>X</button> " + playlist[i].name + " [" + timeToString(playlist[i].time) + "]<button onclick='queueMySong("+i+")'>Queue to Node</button></td></tr>";
+    }
+    $("#myplaylist").html(new_html);
+}
+
+
+$("#queue_input").keypress(function (e) {
+  if (e.which == 13) {
+    queueMusicNode();
+    return false;    //<---- Add this line
+  }
+});
+function queueMusicNode() {
+    var vid_id = $("#queue_input").val().split('v=')[1];
+    var ampersandPosition = vid_id.indexOf('&');
+    if(ampersandPosition != -1) {
+        vid_id = vid_id.substring(0, ampersandPosition);
+    }
+    current_playlist.push({name: "(Retrieving name...)",
+    id: vid_id,
+    time: 300})
+    $("#queue_input").val("");
+    refreshNodePlaylist();
+}
+
+$("#queue_input_mine").keypress(function (e) {
+  if (e.which == 13) {
+    queueMyPlaylist();
+    return false;    //<---- Add this line
+  }
+});
+function queueMyPlaylist() {
+    var vid_id = $("#queue_input_mine").val().split('v=')[1];
+    var ampersandPosition = vid_id.indexOf('&');
+    if(ampersandPosition != -1) {
+        vid_id = vid_id.substring(0, ampersandPosition);
+    }
+    my_playlist.push({name: "(Retrieving name...)",
+    id: vid_id,
+    time: 300})
+    $("#queue_input_mine").val("");
+    refreshMyPlaylist();
+}
+
+function skip() {
+    current_time = video_time + 1;
+    refreshNodePlaylist();
+}
+function deleteMySong(index) {
+    my_playlist.splice(index, 1);
+    refreshMyPlaylist();
+}
+function queueMySong(index) {
+    current_playlist.push(my_playlist[index])
+    refreshNodePlaylist();
 }

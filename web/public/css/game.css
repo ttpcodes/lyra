@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Nova+Square');
 @import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
 @import url('https://fonts.googleapis.com/css?family=Rajdhani');
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
+
 body {
     overflow: hidden;
     margin: 0;
 }
 
 .ui {
-    background-color: #333355;
+    background-color: #222222;
     opacity: 0.8;
     position: absolute;
     right: 0px;
@@ -36,7 +38,6 @@ button.accordian:hover {
 }
 .accordian-content{
     width: 100%;
-   
     font-family: 'Nova Square', cursive;  
     font-family: 'Major Mono Display', monospace;
     font-size: 20px; 
@@ -44,8 +45,8 @@ button.accordian:hover {
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.2s ease-in-out;
-    padding-left:2px;
-    padding-right:2px;
+    padding-left:0px;
+    padding-right:0px;
     
 }
 
@@ -55,21 +56,97 @@ button.accordian:hover {
     position: relative;
 }
 
- th.song{
-    width: 200px;
-    height: 30px;
-    border: 1px solid #000;
-    overflow: hidden;
-    line-height: 30px;
-    padding: 5px;
-    
+
+
+td.button{
+    background-color: #000;
+    padding:4px;
+    width:40px;
+    height: 28px;
+    z-index:1;
+}
+td.trash{
+    background-color: #000;
+    padding:4px;
+    width:40px;
+    height: 28px;
+    z-index:1;
+}
+
+td.trash:hover{
+    background-color: rgb(211, 51, 51);
+}
+
+tr.songrow:hover > td.song{
+    background-color: #2c7394;
+    cursor:pointer;
+}
+
+tr.songrow:hover > td.button{
+    background-color: #2c7394;
+    cursor:pointer;
+}
+td.song{
+    width: 260px;
+    height: 28px;
+    background-color: black;
+    white-space: nowrap;
+    position: relative;
+    font-size: 20px;
+    font-family: 'Oxygen', sans-serif;
+    color: #CCC;
+    padding-left: 2px;
+    padding-top:3px;
+    padding-bottom:3px;
+    z-index:-1;
   }
-  th.song span {
+
+  td.time{
+    background-color: #000;
+    padding:4px;
+    width:40px;
+    height: 28px;
+
+   
+  }
+
+  td.song span {
     position: absolute;
     white-space: nowrap;
-    transform: translateX(0);
-    transition: 1s;
   }
-  th.song:hover{
-    transform: translateX(calc(200px - 100%));
+
+
+  td.song:hover{
+    animation: sidescroll 6s linear infinite;
   }
+
+  ::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-width-none {
+    scrollbar-width: none;
+  }
+  @keyframes sidescroll {
+    0% {
+        transform: translateX(0);
+    }
+  
+    60% {
+        transform: translateX(calc(275px - 100%));
+    }
+    100% {
+        transform: translateX(calc(275px - 100%));
+    }
+  }
+
+.addCollection{
+    background-color: rgb(25, 33, 105);
+    white-space: nowrap;
+    font-size: 20px;
+    font-family: 'Oxygen', sans-serif;
+    color: #CCC;
+    position:sticky;
+    bottom: 0px;
+    padding:0px;
+}
+  

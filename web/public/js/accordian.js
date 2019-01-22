@@ -57,14 +57,45 @@ function openthegates(array){
             one = 1;
         }
         if (array[i] == 2){
-            playlist.style.maxHeight= playlist.scrollHeight +"px";  
+            if (array.length<=1){
+                if (playlist.scrollheight< 600){
+                    playlist.style.maxHeight= playlist.scrollHeight +"px"; 
+                }
+                else {
+                    playlist.style.maxHeight = 600+"px";
+                }
+            }
+            else{
+                if (playlist.scrollheight< 300){
+                    playlist.style.maxHeight= playlist.scrollHeight +"px"; 
+                }
+                else {
+                    playlist.style.maxHeight = 300+"px";
+                }
+            }
             two = 1; 
         }
         if (array[i] == 3){
-            node.style.maxHeight= node.scrollHeight +"px";   
+            if (array.length<=1){
+                if (node.scrollheight< 600){
+                    node.style.maxHeight= node.scrollHeight +"px"; 
+                }
+                else {
+                    node.style.maxHeight = 600+"px";
+                }
+            }
+            else{
+                if (node.scrollheight< 300){
+                    node.style.maxHeight= node.scrollHeight +"px"; 
+                }
+                else {
+                    node.style.maxHeight = 300+"px";
+                }  
+            }
             three = 1;
         }
     }
+
     if( one==0){
         map.style.maxHeight =0;
     }
