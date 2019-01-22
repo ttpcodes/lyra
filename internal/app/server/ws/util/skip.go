@@ -7,5 +7,5 @@ type SkipCommand struct {
 }
 
 func (c SkipCommand) Handle(client Client) {
-
+	client.User.Node.Next()
 }

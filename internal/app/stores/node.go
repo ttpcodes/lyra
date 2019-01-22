@@ -17,6 +17,7 @@ func CreateNodeStore() {
 	}
 	for i := range [18]int{} {
 		node := models.NewNode(uint(i))
+		go node.Run()
 		nodeInstance.Add(node)
 	}
 }

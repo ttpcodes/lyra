@@ -148,6 +148,14 @@
   version = "v0.8.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:8cf7854a2fcf4074a4884f4751e56f069d7d0b9f2fdc14d00472ad345444674e"
+  name = "github.com/senseyeio/duration"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7c2a214ada4602c1d0638fb1abdbf8c6f25d0967"
+
+[[projects]]
   digest = "1:87c2e02fb01c27060ccc5ba7c5a407cc91147726f8f40b70cceeedbc52b1f3a8"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
@@ -282,6 +290,20 @@
   version = "v0.3.0"
 
 [[projects]]
+  digest = "1:241c024caffcb70905f37668ea9395a072bc7003d9a7fdeace5aa9ba1f1ed180"
+  name = "google.golang.org/api"
+  packages = [
+    "gensupport",
+    "googleapi",
+    "googleapi/internal/uritemplates",
+    "googleapi/transport",
+    "youtube/v3",
+  ]
+  pruneopts = "UT"
+  revision = "19e022d8cf43ce81f046bae8cc18c5397cc7732f"
+  version = "v0.1.0"
+
+[[projects]]
   digest = "1:6f3bd49ddf2e104e52062774d797714371fac1b8bddfd8e124ce78e6b2264a10"
   name = "google.golang.org/appengine"
   packages = [
@@ -314,6 +336,7 @@
     "github.com/gorilla/websocket",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
+    "github.com/senseyeio/duration",
     "github.com/sirupsen/logrus",
     "github.com/spf13/viper",
     "github.com/volatiletech/authboss",
@@ -322,6 +345,8 @@
     "github.com/volatiletech/authboss/defaults",
     "github.com/volatiletech/authboss/register",
     "golang.org/x/net/webdav",
+    "google.golang.org/api/googleapi/transport",
+    "google.golang.org/api/youtube/v3",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

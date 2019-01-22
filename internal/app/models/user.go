@@ -15,7 +15,7 @@ type User struct {
 
 	Medias []Media `gorm:"many2many:medias_users;"`
 
-	Node Node `gorm:"-"`
+	Node *Node `gorm:"-"`
 }
 
 func (u User) GetArbitrary() map[string]string {
