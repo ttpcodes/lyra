@@ -121,8 +121,8 @@ var camera_target_x = 1.5;
 var camera_target_y = -2;
 var camera_target_z = 4;
 
-var am_light = new THREE.AmbientLight(0xAAAAAA, 0.3); // soft white light
-// scene.add(am_light);
+var am_light = new THREE.AmbientLight(0xAAAAAA, 1); // soft white light
+scene.add(am_light);
 
 // main light
 // var light = new THREE.DirectionalLight( 0xffffff, 0.2, 5000 );
@@ -152,7 +152,7 @@ light.shadow.camera.right = 20;
 light.shadow.camera.top = 20;
 light.shadow.camera.bottom = -20;
 light.shadow.bias = 0.0001;
-scene.add(light);
+// scene.add(light);
 
 var light2 = new THREE.PointLight( 0x3bdcff, 0.9, 5000 );
 // light.position.set(2, 2, 10); 			//default; light shining from top
@@ -166,7 +166,7 @@ light2.shadow.camera.right = 20;
 light2.shadow.camera.top = 20;
 light2.shadow.camera.bottom = -20;
 light2.shadow.bias = 0.0001;
-scene.add(light2);
+// scene.add(light2);
 
 var light3 = new THREE.PointLight( 0x2ecc71, 0.3, 5000 );
 // light.position.set(2, 2, 10); 			//default; light shining from top
@@ -180,10 +180,10 @@ light3.shadow.camera.right = 20;
 light3.shadow.camera.top = 20;
 light3.shadow.camera.bottom = -20;
 light3.shadow.bias = 0.0001;
-scene.add(light3);
+// scene.add(light3);
 
 var lightz = new THREE.HemisphereLight( 0x272056, 0xbf5cbe, 0.2 );
-scene.add( lightz );
+// scene.add( lightz );
 
 // light = new THREE.DirectionalLight( 0xff0000, 0.9, 5000 );
 // light.position.set(-10, 2, 10); 			//default; light shining from top
