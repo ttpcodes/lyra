@@ -33,93 +33,66 @@
 			<!--node-->
 			<button class ='accordian' id="nodebutton"> node</button>
 			<div class = "accordian-content" id="node">
-					<table class = "nodelist">
+				<table class = "nodelist" id="nodetable">
 					<tr class = "nodesongrow">
 						<td class ='nodesong'>
-							Short
+							Nothing here! Move to a music node with arrow keys to hear some music.
+						</td>
 					</tr>
 				</table>
 				<form>
-					<div class = "addCollection" >
-					<input type="text" id="queueAdd" name="queueAdd" placeholder="Youtube-URL"></input>
-					QUEUE</div>				
-				</form>
+				<div id="queue" onclick="queueMusicNode()" class = "addCollection">
+					<input type="text" id="queue_input" name="queueAdd" placeholder="Youtube-URL"></input>
+					QUEUE</div>			
+				</form>	
 			</div>
 		
 			<!--playlist-->
 			<button class ='accordian' id = "playlistbutton"> playlist </button>
 			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
-				<table class = "playlist">
-				<tr class = "songrow">
-					<td class = 'trash'>
-						<i class="fas fa-trash-alt" style = "position:relative;"></i>
-					</td> 
-					<td class = 'button'>
-						<i class="fas fa-plus" style = "position:relative;"></i>
-					</td> 
-					<td class ='song'>
-						Short
-					</td>
-				</tr>
-				<!---extras-->
-				<tr class = "songrow">
-					<td class = 'trash'>
-						<i class="fas fa-trash-alt" style = "position:relative;"></i>
-					</td> 
-					<td class = 'button'>
-						<i class="fas fa-plus" style = "position:relative;"></i>
-					</td> 
-					<td class ='song'>
-						Shorterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr not really
-					</td>
-				</tr>
-				<tr class = "songrow">
-					<td class = 'trash'>
-						<i class="fas fa-trash-alt" style = "position:relative;"></i>
-					</td> 
-					<td class = 'button'>
-						<i class="fas fa-plus" style = "position:relative;"></i>
-					</td> 
-					<td class ='song'>
-						longggggggggggggggggggbut not really
-					</td>
-				</tr>
-					<!--end extras-->
+				<table class = "playlist" id='playlisttable'>
+					<tr class = "songrow">
+						<td class = 'trash'>
+							<i class="fas fa-trash-alt" style = "position:relative;"></i>
+						</td> 
+						<td class = 'button'>
+							<i class="fas fa-plus" style = "position:relative;"></i>
+						</td> 
+						<td class ='song'>
+							Short
+						</td>
+					</tr>
 				</table>
-					<form>
-						<div class = "addCollection" >
-						<input type="text" id="musicAdd" name="musicAdd" placeholder="Youtube-URL"></input>
-						ADD</div>				
-					</form>
+			<form>
+				<div class = "addCollection" onclick="queueMyPlaylist()">
+				<input type="text" id="queue_input_mine" name="musicAdd" placeholder="Youtube-URL"></input>
+				ADD</div>				
+			</form>
 			</div>
 		</div>
 
 
-		<div class = musicplayer>
-			<button id="skip" onclick="skip()"> Skip </button>
-			<i class=" volumeicon fas fa-volume-up" style = "color:#DDDDDD"></i>
-			<input type="range" min="1" max="1000" value="400" >
-			<div class="slidecontainer">
-				<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
+	<div class = musicplayer>
+		<button id="skip" onclick="skip()"> Skip </button>
+		<i class=" volumeicon fas fa-volume-up" style = "color:#DDDDDD"></i>
+		<input type="range" min="1" max="1000" value="400" >
+		<div class="slidecontainer">
+			<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
+		</div>
+		<div class = "nowPlayingSign ">Current<!--<span id="time">0:00 / 0:00</span>-->
+			<div class = "nowPlaying"> GOOOOOOOOOOOOOOOOOOOOOOOOOD SOOOOOOOOOOOOOng
 			</div>
-				<div class = "nowPlayingSign ">Current<!--<span id="time">0:00 / 0:00</span>-->
-						<div class = "nowPlaying"> GOOOOOOOOOOOOOOOOOOOOOOOOOD SOOOOOOOOOOOOOng
-					</div>
-				</div>
-			</div>
-			
-			<!--
-			
-			<button id="skip" onclick="skip()">Skip</button>-->
+		</div>
+	</div>
 		</div>
 	</div> 
 
-	<!--
+	
 	<iframe id="existing-iframe-example"
-        width="640" height="360"
-        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
-        frameborder="0"
-        style="border: solid 4px #37474F"></iframe>--> 
+	        width="640" height="360"
+	        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
+	        frameborder="0"
+	        style="border: solid 4px #37474F"></iframe>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<audio id="youtube"  autoplay  loop></audio>
@@ -127,5 +100,5 @@
 	<script src="static/js/three.js"></script>
 	<script src="static/js/helpers.js"></script>
 	<script src="static/js/main.js"></script>
-	<script src = "static/js/accordian.js"></script>
+	<script src ="static/js/accordian.js"></script>
 </html>

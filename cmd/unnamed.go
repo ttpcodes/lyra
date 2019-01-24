@@ -15,10 +15,17 @@ func main() {
 	viper.SetEnvPrefix("UNNAMED")
 	viper.AutomaticEnv()
 
-	err := viper.BindEnv(constants.YOUTUBE_KEY)
+	viper.SetDefault(constants.DB_HOST, "localhost")
+
+	err := viper.BindEnv(constants.DB_HOST)
 	if err != nil {
 		logrus.Fatal("Error binding to environment variables:\n", err)
 	}
+	err = viper.BindEnv(constants.YOUTUBE_KEY)
+	if err != nil {
+		logrus.Fatal("Error binding to environment variables:\n", err)
+	}
+
 	key := viper.GetString(constants.YOUTUBE_KEY)
 	if key == "" {
 		logrus.Fatal("YouTube API key was not provided to the application.")

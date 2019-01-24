@@ -5,6 +5,7 @@ build: frontend
 
 deps:
 	dep ensure
+	cd web/ && npm install
 
 frontend:
 	cd web && npm run build
