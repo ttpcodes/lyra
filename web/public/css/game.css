@@ -282,4 +282,10 @@ td.song{
         background-color: rgb(117, 4, 38)
     }
 
+.addbutton{
+    display: inline-block; 
+    width:70px;
+    margin:0px;
+}
+
                                                                                                                                                                                                             
