@@ -9,8 +9,8 @@ body {
 }
 
 .ui {
-    background-color: #222222;
-    opacity: 0.8;
+    background-color: #444;
+    opacity: 0.9;
     position: absolute;
     right: 0px;
     top: 0px;
@@ -31,6 +31,7 @@ body {
     transition: background-color 0.2s linear;
     cursor:pointer;
     border: 0.5px solid black;
+    opacity: 0.9;
 }
 
 button.accordian:hover {
@@ -47,6 +48,7 @@ button.accordian:hover {
     transition: max-height 0.2s ease-in-out;
     padding-left:0px;
     padding-right:0px;
+    opacity: 0.9;
     
 }
 
@@ -56,38 +58,64 @@ button.accordian:hover {
     position: relative;
 }
 
-
+table {
+    width: 100%;
+  }
 
 td.button{
     background-color: #000;
     padding:4px;
-    width:40px;
+    width:30px;
     height: 28px;
-    z-index:1;
+    position:relative;
+    z-index:2;
 }
 td.trash{
     background-color: #000;
     padding:4px;
-    width:40px;
+    width:30px;
     height: 28px;
-    z-index:1;
+    position:relative;
+    z-index:2;
+    cursor:pointer;
 }
 
 td.trash:hover{
     background-color: rgb(211, 51, 51);
 }
 
+td.nodesong:hover{
+    background-color: #2c7394;
+    cursor:default;
+}
 tr.songrow:hover > td.song{
     background-color: #2c7394;
     cursor:pointer;
 }
 
+tr.nodesongrow:hover{
+    background-color: #2c7394;
+}
 tr.songrow:hover > td.button{
     background-color: #2c7394;
     cursor:pointer;
 }
+
+.addCollection:hover{
+    background-color: #2c7394;
+    cursor:pointer;
+}
+
+tr.songrow{
+    background-color: black;
+}
+tr.nodesongrow{
+    background-color: black;
+}
+
+
 td.song{
-    width: 260px;
+    
     height: 28px;
     background-color: black;
     white-space: nowrap;
@@ -98,26 +126,36 @@ td.song{
     padding-left: 2px;
     padding-top:3px;
     padding-bottom:3px;
-    z-index:-1;
+    z-index:1;
   }
 
-  td.time{
-    background-color: #000;
-    padding:4px;
-    width:40px;
+  td.nodesong{
+    width: 300px;
     height: 28px;
-
-   
+    background-color: black;
+    white-space: nowrap;
+    position: relative;
+    font-size: 20px;
+    font-family: 'Oxygen', sans-serif;
+    color: #CCC;
+    padding-left: 4px;
+    padding-top:3px;
+    padding-bottom:3px;
+    z-index:1;
   }
+
 
   td.song span {
     position: absolute;
     white-space: nowrap;
   }
 
+   td.song:hover{
+    animation: sidescroll 8s linear infinite;
+  }
 
-  td.song:hover{
-    animation: sidescroll 6s linear infinite;
+  td.nodesong:hover{
+    animation: sidescroll 8s linear infinite;
   }
 
   ::-webkit-scrollbar {
@@ -130,14 +168,12 @@ td.song{
     0% {
         transform: translateX(0);
     }
-  
-    60% {
-        transform: translateX(calc(275px - 100%));
-    }
-    100% {
-        transform: translateX(calc(275px - 100%));
+
+    100% { 
+        transform: translateX(-100%);
     }
   }
+
 
 .addCollection{
     background-color: rgb(48, 17, 73);
@@ -150,7 +186,101 @@ td.song{
     padding:0px;
     margin:0px;
     border-top:3px solid rgb(136, 136, 136);
+    
 }
 
+.musicplayer{
+    position:fixed;
+    bottom:0px ;
+    height: 90px;
+    background-color: rgb(7, 2, 24);
+    opacity: 1!important;
+    width:100%;
+    border-top:3px solid rgb(136, 136, 136);
+    overflow:hidden;
+}
+.slidecontainer{
+    height:23px;
 
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; 
+    height: 10px; 
+    background: #d3d3d3; 
+    outline: none; 
+    padding:1px;
+    border:0px;
+    border: 1px solid rgb(15, 4, 49);
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background: #000; /* Green background */
+  }
   
+  .slider::-moz-range-thumb {
+    -moz-appearance: none; /* Override default look */
+    appearance: none;
+    
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background: #000; /* Green background */
+  }
+
+  .nowPlaying{
+    
+    height: 28px;
+    position:absolute;
+    white-space: nowrap;
+    font-size: 20px;
+    font-family: 'Oxygen', sans-serif;
+    color: #CCC;
+    padding-left: 0px;
+    margin:0px;
+    bottom:7px;
+    left: 80px;
+    
+    
+    animation: sidescroll 12s linear infinite;
+    z-index: -1;
+  }
+  .nowPlayingSign{
+    width: 73px;
+    height:35px;
+    
+    position:relative;
+    font-size: 20px;
+    font-family: 'Nova Square', cursive;
+    color: #CCC;
+    margin-bottom: 10px;
+    padding-bottom:12px;
+    padding-left:3px;
+    background-color: rgb(25, 5, 41);
+  } 
+  #skip{
+    width: 65px;
+    height:32px;
+    position:relative;
+    font-size: 20px;
+    font-family: 'Nova Square', cursive;
+    color: #CCC;
+    padding-top:1px;
+    padding-left:3px;
+    background-color: rgb(58, 20, 88);
+    border: 1px;
+    opacity: 0.8;
+    } 
+
+    #skip:hover{
+        cursor:pointer;
+        background-color: rgb(117, 4, 38)
+    }
+
+                                                                                                                                                                                                            
