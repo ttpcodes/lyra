@@ -26,8 +26,8 @@
 			<!--map-->
 			<button class ='accordian' id="mapbutton"> map </button>
 			<div class = "accordian-content" id="map">
-				<div> 
-					<img src="static/img/DummyMap.png" alt="mapimg" class = "mapimg">
+				<div>
+					<img src="static/img/dummyMap.png" alt="mapimg" class = "mapimg">
 				</div>
 			</div>
 			<!--node-->
@@ -41,32 +41,23 @@
 					</tr>
 				</table>
 				<form>
-				<div id="queue" onclick="queueMusicNode()" class = "addCollection">
+				<div id="queue"  class = "addCollection">
 					<input type="text" id="queue_input" name="queueAdd" placeholder="Youtube-URL"></input>
-					QUEUE</div>			
-				</form>	
+					<span onclick="queueMusicNode()">QUEUE</span>
+				</div>
+				</form>
 			</div>
-		
+
 			<!--playlist-->
 			<button class ='accordian' id = "playlistbutton"> playlist </button>
 			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
 				<table class = "playlist" id='playlisttable'>
-					<tr class = "songrow">
-						<td class = 'trash'>
-							<i class="fas fa-trash-alt" style = "position:relative;"></i>
-						</td> 
-						<td class = 'button'>
-							<i class="fas fa-plus" style = "position:relative;"></i>
-						</td> 
-						<td class ='song'>
-							Short
-						</td>
-					</tr>
 				</table>
 			<form>
-				<div class = "addCollection" onclick="queueMyPlaylist()">
-				<input type="text" id="queue_input_mine" name="musicAdd" placeholder="Youtube-URL"></input>
-				ADD</div>				
+				<div class = "addCollection">
+					<input type="text" id="queue_input_mine" name="musicAdd" placeholder="Youtube-URL"></input>
+					<span onclick="queueMyPlaylist()">ADD    </span>
+				</div>
 			</form>
 			</div>
 		</div>
@@ -80,14 +71,14 @@
 			<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
 		</div>
 		<div class = "nowPlayingSign ">Current<!--<span id="time">0:00 / 0:00</span>-->
-			<div class = "nowPlaying"> GOOOOOOOOOOOOOOOOOOOOOOOOOD SOOOOOOOOOOOOOng
+			<div class = "nowPlaying" id="nowplaying">
 			</div>
 		</div>
 	</div>
 		</div>
-	</div> 
+	</div>
 
-	
+
 	<iframe id="existing-iframe-example"
 	        width="640" height="360"
 	        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"

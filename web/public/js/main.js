@@ -65,18 +65,24 @@ socket.addEventListener('message', (event) => {
         console.log("nodeupdate");
         console.log(message["Node"])
         if(message["Node"]["ID"] == curr_node) {
+            var new_vid = video_id != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
             current_playlist = message["Node"]["Playlist"]
             current_time = message["Node"]["CurrentTime"]
             if(current_playlist.length == 0) {
                 video_id = "None";
             }
-            else if(current_playlist[0]["ID"] != video_id) {
+            else if(new_vid) {
+                console.log("it's a different song");
                 video_id = current_playlist[0]["ID"];
                 video_time = current_playlist[0]["Length"];
                 video_name = current_playlist[0]["Title"];
                 if(ready && video_id != "None") {
                     beginNewSong();
+                    player.playVideo();
                 }
+            }
+            else {
+                player.playVideo();
             }
             refreshNodePlaylist();
         }
@@ -336,69 +342,58 @@ for(var k = 0; k < connection_locs.length; k++) {
     // scene.add(building);
 }
 
-var buildings = []
-var rots = []
-// buildings
-for(var x = -5; x < 30; x++) {
-    for(var y = -5; y < 20; y++) {
-        var height = 1 + Math.random();
-        var colors = [0x5b3568, 0x2d6152, 0x50c44a];
-        for(var i = 0; i < 10; i++) {
-            colors.push(0x5b3568)
-            colors.push(0x5b3568)
-            colors.push(0x5b3568)
-            colors.push(0x2d6152)
-            colors.push(0x50c44a)
-        }
-        for(var i = 0; i < x; i++) {
-            colors.push(0x2d6152)
-            colors.push(0x2d6152)
-            colors.push(0x2d6152)
-        }
-        for(var i = 0; i < y; i++) {
-            colors.push(0x50c44a)
-            colors.push(0x50c44a)
-            colors.push(0x50c44a)
-        }
-        var color = colors[Math.floor(Math.random() * colors.length)];
-        var randx1 = 1.2 + (Math.random()-0.5)*0.4;
-        var randy1 = 1.2 + (Math.random()-0.5)*0.4;
+function makeBuildings() {
+    var buildings = []
+    var rots = []
+    // buildings
+    for(var x = -5; x < 30; x++) {
+        for(var y = -5; y < 20; y++) {
+            var height = 1 + Math.random();
+            var colors = [0x5b3568, 0x2d6152, 0x50c44a];
+            for(var i = 0; i < 10; i++) {
+                colors.push(0x5b3568)
+                colors.push(0x5b3568)
+                colors.push(0x5b3568)
+                colors.push(0x2d6152)
+                colors.push(0x50c44a)
+            }
+            for(var i = 0; i < x; i++) {
+                colors.push(0x2d6152)
+                colors.push(0x2d6152)
+                colors.push(0x2d6152)
+            }
+            for(var i = 0; i < y; i++) {
+                colors.push(0x50c44a)
+                colors.push(0x50c44a)
+                colors.push(0x50c44a)
+            }
+            var color = colors[Math.floor(Math.random() * colors.length)];
+            var randx1 = 1.2 + (Math.random()-0.5)*0.4;
+            var randy1 = 1.2 + (Math.random()-0.5)*0.4;
 
-        if(Math.random() < 0.0) {
-        }
-        else {
-            var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
-            var building_material = new THREE.MeshPhongMaterial( { color: color } );
-            var building = new THREE.Mesh(building_geometry, building_material );
-            building.position.x = x*2 + (Math.random()-0.5)*1;
-            building.position.y = y*2 + (Math.random()-0.5)*1;
-            building.position.z = height/2;
-            building.rotation.z = Math.random()*Math.PI
-            // building.rotation.x = Math.random()*Math.PI
-            building.castShadow = true; //default is false
+            if(Math.random() < 0.0) {
+            }
+            else {
+                var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
+                var building_material = new THREE.MeshPhongMaterial( { color: color } );
+                var building = new THREE.Mesh(building_geometry, building_material );
+                building.position.x = x*2 + (Math.random()-0.5)*1;
+                building.position.y = y*2 + (Math.random()-0.5)*1;
+                building.position.z = height/2;
+                building.rotation.z = Math.random()*Math.PI
+                // building.rotation.x = Math.random()*Math.PI
+                building.castShadow = true; //default is false
 
-            var ok = true;
-            for(var k = 0; k < connection_locs.length; k++) {
-                if(Math.pow(connection_locs[k][0] - building.position.x, 2) + Math.pow(connection_locs[k][1] - building.position.y, 2) < 2) {
-                    ok = false;
+                var ok = true;
+                for(var k = 0; k < connection_locs.length; k++) {
+                    if(Math.pow(connection_locs[k][0] - building.position.x, 2) + Math.pow(connection_locs[k][1] - building.position.y, 2) < 2) {
+                        ok = false;
+                    }
+                }
+                if(ok) {
+                    scene.add(building);
                 }
             }
-            if(ok) {
-                scene.add(building);
-            }
-            // buildings.push(building);
-            // rots.push([Math.random(), Math.random(), Math.random(), Math.random()*0.5 + 0.3])
-
-            // if(Math.random() < 0.3) {
-            //     var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
-            //     var building_material = new THREE.MeshPhongMaterial( { color: color } );
-            //     var building2 = new THREE.Mesh(building_geometry, building_material );
-            //     building2.position.x = building.position.x + (Math.random()-0.5)*1;
-            //     building2.position.y = building.position.y + (Math.random()-0.5)*1;
-            //     building2.position.z = height/2;
-            //     building2.castShadow = true; //default is false
-            //     scene.add(building2);
-            // }
         }
     }
 }
@@ -547,6 +542,7 @@ function myPlaylist() {
 
 // make this async
 function updateNodeData(force_update) {
+    console.log("updatenodefga");
     current_playlist = []
     $.get("/nodes/"+curr_node, function( data ) {
         var msg = JSON.parse(data)
@@ -570,17 +566,18 @@ function updateNodeData(force_update) {
         refreshNodePlaylist();
     });
 }
-updateNodeData(false)
+
 
 function onPlayerReady(event) {
     console.log("ready");
     ready = true;
+    updateNodeData(false)
 }
 
 function onStateChange(event) {
     console.log(event.data);
     if(event.data == 1) {
-        $("#name").html("Now playing: " + video_name);
+        $("#nowplaying").html("Now playing: " + video_name);
         var time = player.getDuration();
         video_time = time;
         $("#time").html(timeToString(current_time) + " / " + timeToString(video_time));
@@ -628,7 +625,7 @@ setInterval(function(){
 
 
 function beginNewSong() {
-    $("#name").html("Now loading: " + video_name);
+    $("#nowplaying").html("Now loading: " + video_name);
     player.loadVideoById(video_id, current_time);
 }
 
@@ -648,7 +645,7 @@ function refreshNodePlaylist() {
             new_html += final_part;
         }
         if(playlist.length <= 1) {
-            $("#nodetable").html("<tr><td>Nothing in the queue! Add a song to play it.</tr></td>");
+            $("#nodetable").html("<tr class = 'nodesongrow'><td class = 'nodesong'>Nothing in the queue! Add a song to play it.</tr></td>");
         }
         else {
             $("#nodetable").html(new_html);
@@ -720,6 +717,7 @@ function queueMyPlaylist() {
 }
 
 function skip() {
+    console.log("skip");
     player.pauseVideo();
     socket.send(JSON.stringify({"Command": "skip"}))
 }
