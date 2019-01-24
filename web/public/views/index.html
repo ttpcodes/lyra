@@ -6,14 +6,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">       
         <link href ="/static/css/index.css" rel = "stylesheet">
-        <style>
-            body { background-color: #000000; }
-        </style>    
+        
     </head>
 
-    <body>
+    <body scroll="no" style="overflow: hidden">
     <!--background-->
-    <div class = "wholescreen background" id="background">
+    <div class = "wholescreen picture-flicker background" id="background">
 
     <!--blackscreen-->
     <div id = "blackscreen">
@@ -25,6 +23,11 @@
     <!--MuteMeDaddy-->
     <div >
         <i id="mutebutton" class="fas fa-volume-up fa-2x" style = "color:#DDDDDD; position: absolute; bottom:4px; right: 4px; opacity: 0.8; cursor:pointer;"></i>
+    </div>
+
+    <!--StopMeDaddy-->
+    <div >
+        <i id="stopbutton" class="fas fa-desktop fa-2x" style = "color:#DDDDDD; position: absolute; bottom:4px; right: 50px; opacity: 0.8; cursor:pointer;"></i>
     </div>
           
     <!--text-->
@@ -103,7 +106,7 @@
                 </div>
                 <div class="form-label-group pwlabel">
                     <label for="registerUsername">Username</label>
-                    <input type="text" id="inputEmail" class="form-control inputboxtwo" placeholder="Username" required autofocus name="username">
+                    <input type="text" id="username" class="form-control inputboxtwo" placeholder="Username" required autofocus name="username">
                 </div>
                 <div class="form-label-group pwlabel2">
                     <label for="inputPassword">Password</label>

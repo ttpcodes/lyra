@@ -1,16 +1,38 @@
 
 var state = 0;
 var counter = 0;
+var animation = 1;
 
 function playAudio() { 
   bgm.play(); 
 } 
 
+var stopbutton = document.getElementById("stopbutton");
+var background = document.getElementById("background");
+var blackscreen = document.getElementById("blackscreen");
+$('#stopbutton').click(function() {toggleAnimation()});
+
+function toggleAnimation() { 
+  console.log("no u");
+  if (animation == 1){
+    background.classList.remove("picture-flicker")
+    stopbutton.style.color = "rgb(216, 57, 57)";
+    
+      animation = 0;
+  }
+  else{
+    background.classList.add("picture-flicker")
+    stopbutton.style.color = "#DEDEDE";
+    
+    animation = 1;
+  }
+}
+
+
 var mutebutton = document.getElementById("mutebutton");
-$('div i').click(function() {toggleAudio()});
+$('#mutebutton').click(function() {toggleAudio()});
 
 function toggleAudio() { 
-  console.log("no u");
   if (bgm.muted){
     bgm.muted = false;
     mutebutton.className = "fas fa-volume-up fa-2x";
@@ -29,14 +51,10 @@ onkeypress = function(){
   if (counter == 0){ 
     var bgm = document.getElementById("bgm"); 
     bgm.play();
-    console.log("hi!");
-    var background = document.getElementById("background");
-    background.classList.add("picture-flicker");
     var covertext = document.getElementById("cover_text");
     covertext.classList.remove("flicker");
     var fadeout = document.getElementById("textfadeout")
     fadeout.classList.add("fadeout");
-    var blackscreen =document.getElementById("blackscreen");
     blackscreen.classList.add("fadein");
     var navbardiv = document.getElementById("abc");
     navbardiv.classList.add("navappear");

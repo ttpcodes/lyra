@@ -22,81 +22,72 @@
 	<div id="game"></div>
 	<!-- UI -->
 	<div class="ui">
-	    <div class = "menu" >
-	        <!--map-->
-	        <button class ='accordian' id="mapbutton"> map </button>
-	        <div class = "accordian-content" id="map">
-	            <div>
-	                <img src="static/img/DummyMap.png" alt="mapimg" class = "mapimg">
-	            </div>
-	        </div>
-	        <!--node-->
-	        <button class ='accordian' id="nodebutton"> node</button>
-	        <div class = "accordian-content" id="node">
-				<table class = "playlist" id="nodetable">
-					<tr><td>Nothing here! Move to a music node with arrow keys to hear some music.</td></tr>
-	            </table>
-				<input id="queue_input" value="https://www.youtube.com/watch?v=gzkfzOmr0JQ"></input>
-				<button id="queue" onclick="queueMusicNode()">Add</button>
-	        </div>
-	        <!--playlist-->
-	        <button class ='accordian' id = "playlistbutton"> playlist </button>
-	        <div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
-	            <table class = "playlist" id="playlisttable">
-		            <tr class = "songrow">
-	                    <td class = 'trash'>
-							<i class="fas fa-trash-alt" style = "position:relative;"></i>
-                        </td>
-		                <td class = 'button'>
-		                    <i class="fas fa-plus" style = "position:relative;"></i>
-		                </td>
-		                <td class ='song'>
-		                    Song title very long indeed what would i ever do with us holy moly
-		                </td>
-		            </tr>
-					<tr class = "songrow">
-	                    <td class = 'trash'>
-							<i class="fas fa-trash-alt" style = "position:relative;"></i>
-                        </td>
-		                <td class = 'button'>
-		                    <i class="fas fa-plus" style = "position:relative;"></i>
-		                </td>
-		                <td class ='song'>
-		                    Song title very long indeed what would i ever do with us holy moly
-		                </td>
-		            </tr>
-	            <!---extras-->
-	                <!--end extras-->
-	            </table>
-	            <!-- <div class = "addCollection">
-	                    Add song to collection:
-	                    <input id="queue_input_mine"></input>
-	                    <button id="queue_mine" onclick="queueMyPlaylist()">Add</button>
-	                    <hr>
-	                    <table id="myplaylist"></table>
-	            </div> -->
+		<div class = "menu" >
+			<!--map-->
+			<button class ='accordian' id="mapbutton"> map </button>
+			<div class = "accordian-content" id="map">
+				<div> 
+					<img src="static/img/DummyMap.png" alt="mapimg" class = "mapimg">
+				</div>
+			</div>
+			<!--node-->
+			<button class ='accordian' id="nodebutton"> node</button>
+			<div class = "accordian-content" id="node">
+				<table class = "nodelist" id="nodetable">
+					<tr class = "nodesongrow">
+						<td class ='nodesong'>
+							Nothing here! Move to a music node with arrow keys to hear some music.
+						</td>
+					</tr>
+				</table>
 				<form>
-		            <div class = "addCollection">
-		            	<input type="text" id="queue_input_mine" name="musicAdd" value="https://www.youtube.com/watch?v=gzkfzOmr0JQ" placeholder="Youtube-URL"></input>
-		            	<span onclick="queueMyPlaylist()">ADD</span>
-					</div>
+				<div id="queue" onclick="queueMusicNode()" class = "addCollection">
+					<input type="text" id="queue_input" name="queueAdd" placeholder="Youtube-URL"></input>
+					QUEUE</div>			
+				</form>	
+			</div>
+		
+			<!--playlist-->
+			<button class ='accordian' id = "playlistbutton"> playlist </button>
+			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
+				<table class = "playlist" id='playlisttable'>
+					<tr class = "songrow">
+						<td class = 'trash'>
+							<i class="fas fa-trash-alt" style = "position:relative;"></i>
+						</td> 
+						<td class = 'button'>
+							<i class="fas fa-plus" style = "position:relative;"></i>
+						</td> 
+						<td class ='song'>
+							Short
+						</td>
+					</tr>
+				</table>
+			<form>
+				<div class = "addCollection" onclick="queueMyPlaylist()">
+				<input type="text" id="queue_input_mine" name="musicAdd" placeholder="Youtube-URL"></input>
+				ADD</div>				
+			</form>
+			</div>
+		</div>
 
-		        </form>
 
-	        </div>
-	    </div>
-
-	    <div class="musicplayer">
-	        <span id="name">Nothing Playing. Move to a music node to start!</span>
-	        <br>
-	        <span id="time">0:00 / 0:00</span>
-	        <div class="slidecontainer">
-	            <input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
-	        </div>
-	        <button id="skip" onclick="skip()">Skip</button>
-	        <hr>
-	    </div>
+	<div class = musicplayer>
+		<button id="skip" onclick="skip()"> Skip </button>
+		<i class=" volumeicon fas fa-volume-up" style = "color:#DDDDDD"></i>
+		<input type="range" min="1" max="1000" value="400" >
+		<div class="slidecontainer">
+			<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
+		</div>
+		<div class = "nowPlayingSign ">Current<!--<span id="time">0:00 / 0:00</span>-->
+			<div class = "nowPlaying"> GOOOOOOOOOOOOOOOOOOOOOOOOOD SOOOOOOOOOOOOOng
+			</div>
+		</div>
 	</div>
+		</div>
+	</div> 
+
+	
 	<iframe id="existing-iframe-example"
 	        width="640" height="360"
 	        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
@@ -104,7 +95,7 @@
 	        style="border: solid 4px #37474F"></iframe>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<audio id="youtube" autoplay controls loop></audio>
+	<audio id="youtube"  autoplay  loop></audio>
 	<script src="static/js/mousetrap.min.js"></script>
 	<script src="static/js/three.js"></script>
 	<script src="static/js/helpers.js"></script>

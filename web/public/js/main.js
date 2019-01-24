@@ -634,7 +634,7 @@ function beginNewSong() {
 
 function refreshNodePlaylist() {
     if(curr_node == 4) {
-        $("#nodetable").html("<tr><td>Nothing here! Move to a music node with arrow keys to hear some music.</tr></td>")
+        $("#nodetable").html("<tr class = 'nodesongrow'><td class = 'nodesong'>Nothing here! Move to a music node with arrow keys to hear some music.</tr></td>")
     }
     else {
         var new_html = "";
@@ -642,8 +642,8 @@ function refreshNodePlaylist() {
         for(var i = 1; i < playlist.length; i++) {
             var titlestr = "" + playlist[i]["Title"]
             // new_html += "<tr class = 'songrow'><td class = 'trash'><i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i></td><td class = 'button'><i onclick='queueMySong("+i+") class='fas fa-plus' style = 'position:relative;'></i></td><td class ='song' onclick='queueMySong("+i+")>"+playlist[i]["Title"]+"</td></tr>"
-            var new_part = "<tr class = 'songrow'>" +
-                "<td class ='song' onclick=queueMySong("+i+")>";
+            var new_part = "<tr class = 'nodesongrow'>" +
+                "<td class ='nodesong' onclick=queueMySong("+i+")>";
             var final_part = new_part + titlestr + "</td>" + "</tr>";
             new_html += final_part;
         }
@@ -695,6 +695,7 @@ function queueMusicNode() {
     id: vid_id,
     time: 300})
     $("#queue_input").val("");
+    console.log("lmao")
     refreshNodePlaylist();
 }
 

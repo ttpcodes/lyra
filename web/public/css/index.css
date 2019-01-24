@@ -34,21 +34,10 @@
   animation: flickerAnimation 2s infinite ease-in-out;
 }
 .fadein {
-  opacity: 0.45 !important;
+  opacity: 0.45;
 }
 .fadeout {
   opacity:0;
-}
-
-I .background {
-  background-image: url("../static/background1.png");
-  width:100%;
-  height:100%;
-  background-size: cover; 
-  margin: 0; 
-  padding: 0; 
-  overflow: hidden;
-  background-repeat: no-repeat;
 }
 
 #blackscreen {
@@ -73,7 +62,7 @@ I .background {
     background-repeat: no-repeat;
   }
 
-  16%   { 
+  12%   { 
     background-image:url("../img/background1.png");
     background-size: cover; 
     margin: 0; 
@@ -82,7 +71,7 @@ I .background {
     background-repeat: no-repeat;
   }
 
-  32%  { 
+  27%  { 
     background-image:url("../img/background1.2.png");
     background-size: cover; 
     margin: 0; 
@@ -91,7 +80,7 @@ I .background {
     background-repeat: no-repeat;
   }
 
-  48%  { 
+  42%  { 
     background-image:url("../img/background1.8.png");
     background-size: cover; 
     margin: 0; 
@@ -106,7 +95,7 @@ I .background {
   overflow: hidden;
   background-repeat: no-repeat;}
 
-  52%  { 
+  58%  { 
     background-image:url("../img/background1.8.png");
     background-size: cover; 
     margin: 0; 
@@ -115,7 +104,7 @@ I .background {
     background-repeat: no-repeat;
   }
 
-  68%  { 
+  73%  { 
     background-image:url("../img/background1.2.png");
     background-size: cover; 
     margin: 0; 
@@ -124,7 +113,7 @@ I .background {
     background-repeat: no-repeat;
   }
 
-  84%   { 
+  89%   { 
     background-image:url("../img/background1.png");
     background-size: cover; 
     margin: 0; 
@@ -144,10 +133,22 @@ I .background {
 }
 
 .picture-flicker {
-  animation: flickerPicture 1s infinite; 
-  animation-direction: ease-in-out;
-  animation-delay: 2s;
+  animation: flickerPicture 0.7s infinite; 
+  animation-timing-function: ease-in-out;
+  animation-delay: 2.3s;
 }
+
+.background {
+  width:100%;
+  height:100%;
+  background-size: cover; 
+  margin: 0; 
+  padding: 0; 
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-image: url("../img/background2.png");
+  }
+
 
 .navbardiv { 
   position: relative; 
@@ -356,15 +357,15 @@ color:  rgba(168, 230, 245, 0.979) ;
 }
 
 input[type="email"]::placeholder { 
-  color:#EEEEEE;
+  color:#999;
 }
 
 input[type="password"]::placeholder { 
-  color:#EEEEEE;
+  color:#999;
 }
 
-input[type="username"]::placeholder { 
-  color:#EEEEEE;
+input[type="text"]::placeholder { 
+  color:#999;
 }
 
 input[type="email"]:focus {
