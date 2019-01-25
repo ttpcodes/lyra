@@ -573,6 +573,7 @@ function onPlayerReady(event) {
     console.log("ready");
     ready = true;
     updateNodeData(false)
+    $("#loading").css('display', 'none')
 }
 
 function onStateChange(event) {

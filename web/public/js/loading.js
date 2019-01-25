@@ -1,3 +1,4 @@
-window.onload = function(){ 
-    document.getElementById("loadingScreen").style.display = "none"
-    console.log("hi")}   
+// window.onload = function(){
+//     $("#loading").style.display = "none"
+//     console.log("hi")
+// }
