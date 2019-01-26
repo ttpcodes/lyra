@@ -1,7 +1,8 @@
-function SetVolume(val)
+function SetVolume()
 {
-    var player = document.getElementById('video');
-    console.log('Before: ' + player.volume);
-    player.volume = val / 100;
-    console.log('After: ' + player.volume);
+    // var vol = document.getElementById('video');
+    // console.log('Before: ' + player.volume);
+    // player.volume = val / 100;
+    // console.log('After: ' + player.volume);
+    player.setVolume($("#volume").val());
 }
