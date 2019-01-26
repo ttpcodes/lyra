@@ -83,10 +83,10 @@
 		<button id="skip" onclick="skip()"> Skip </button>
 		<div class ="volumeContainer">
 			<i class=" volumeicon fas fa-volume-up" style = "color:#DDDDDD"></i>
-			<input type="range" min="1" max="1000" value="400" class = "volume" >
+			<input type="range" min="1" max="100" value="40" class = "volume" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)">
 		</div>	
 		<div class="slidecontainer">
-			<input type="range" min="1" max="1000" value="400" class="slider" id="timeslider">
+			<input type="range" min="1" max="1000" step = '1'value="400" class="slider" id="timeslider">
 		</div>
 		<div class = "nowPlayingSign ">Current<!--<span id="time">0:00 / 0:00</span>-->
 			<div class = "nowPlaying" id="nowplaying">
@@ -110,4 +110,5 @@
 	<script src="static/js/helpers.js"></script>
 	<script src="static/js/main.js"></script>
 	<script src ="static/js/accordian.js"></script>
+	<script src ="static/js/volume.js"></script>
 </html>
