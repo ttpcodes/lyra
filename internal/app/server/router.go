@@ -4,9 +4,10 @@ import (
 	"context"
 	"github.com/gorilla/mux"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/auth"
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/node"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/routes/player"
-	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/ws/routes"
+	ws "github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/server/ws/routes"
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/web"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/authboss"
@@ -41,7 +42,7 @@ func CreateRouter() {
 
 	w := r.PathPrefix("/ws").Subrouter()
 	w.Use(a)
-	w.PathPrefix("/game").HandlerFunc(routes.WebsocketGameHandler)
+	w.PathPrefix("/game").HandlerFunc(ws.WebsocketGameHandler)
 
 	s := r.PathPrefix("/game.html").Subrouter()
 	s.Use(a)
@@ -54,6 +55,7 @@ func CreateRouter() {
 			logrus.Error("Error when serving game route:\n", err)
 		}
 	})
+	r.Path("/").HandlerFunc(routes.IndexHandler)
 
 	r.PathPrefix("/").Handler(fs)
 
