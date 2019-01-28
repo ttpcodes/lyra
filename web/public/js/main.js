@@ -31,10 +31,16 @@ var clock = new THREE.Clock();
 var moving = false;
 var need_play = false;
 var curr_node = 4;
+var first_moved = false;
 
 var ready = false;
 var loaded = false;
 var socket_connected = false;
+
+var old_x = 0;
+var old_y = 0;
+var other_players = {};
+var my_username = "None";
 
 var other_players = [];
 var current_playlist;
@@ -62,6 +68,8 @@ socket.addEventListener('open', function (event) {
         if(my_playlist == null) {
             my_playlist = [];
         }
+        my_username = msg["Username"];
+        refreshMyPlaylist();
     });
 
 });
@@ -81,6 +89,7 @@ socket.addEventListener('message', (event) => {
         }
 
         if(message["Node"]["ID"] == curr_node) {
+            console.log(current_playlist);
             var new_vid = video_id != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
             current_playlist = message["Node"]["Playlist"]
             current_time = message["Node"]["CurrentTime"]
@@ -101,6 +110,39 @@ socket.addEventListener('message', (event) => {
                 player.playVideo();
             }
             refreshNodePlaylist();
+        }
+    }
+    else if(message["Command"] == "playlist") {
+        my_playlist = message["Medias"];
+        refreshMyPlaylist();
+    }
+    else if(message["Command"] == "movePos") {
+        // console.log(message);
+        if(my_username != "None" && message["User"]["Username"] != my_username) {
+            if(!(message["User"]["Username"] in other_players)) {
+                var player_geometry_other = new THREE.DodecahedronGeometry(0.2);
+                var player_material_other = new THREE.MeshBasicMaterial( { color: 0x9b59b6 } );
+                var player_mesh_other = new THREE.Mesh(player_geometry_other, player_material_other);
+                player_mesh_other.position.x = message["X"]
+                player_mesh_other.position.y = message["Y"]
+                player_mesh_other.position.z = 0.5
+                player_mesh_other.castShadow = true;
+                scene.add(player_mesh_other)
+                other_players[message["User"]["Username"]] = player_mesh_other;
+            }
+            else {
+                other_players[message["User"]["Username"]].position.x = message["X"]
+                other_players[message["User"]["Username"]].position.y = message["Y"]
+            }
+        }
+    }
+    else if(message["Command"] == "leave") {
+        console.log(message);
+        if(my_username != "None" && message["User"]["Username"] != my_username) {
+            if((message["User"]["Username"] in other_players)) {
+                scene.remove(other_players[message["User"]["Username"]]);
+                delete other_players[message["User"]["Username"]];
+            }
         }
     }
 })
@@ -288,11 +330,57 @@ function Path(direction, other) {
 }
 var paths = [];
 
+var canvas = document.getElementById('mycanvas');
+var context = canvas.getContext('2d');
+
+function redrawCanvas() {
+    context.clearRect(0, 0, 300, 270);
+    for(var i = 0; i < nodes.length; i++) {
+        context.beginPath();
+        context.arc(50 + nodes[i][0]*15, 250 - nodes[i][1]*14, 2, 0, 2 * Math.PI, false);
+        context.fillStyle = 'gray';
+        context.fill();
+        context.lineWidth = 5;
+        context.strokeStyle = 'gray';
+        context.stroke();
+    }
+    for(var i = 0; i < connections.length; i++) {
+        var first = nodes[connections[i][0]];
+        var second = nodes[connections[i][1]];
+        context.lineWidth = 5;
+        context.strokeStyle = 'gray';
+        context.beginPath();
+        context.moveTo(50 + first[0]*15, 250 - first[1]*14);
+        context.lineTo(50 + second[0]*15, 250 - second[1]*14);
+        context.stroke();
+    }
+    for (var key in other_players) {
+        context.beginPath();
+        context.arc(50 + ((other_players[key].position.x-1.5)/3)*15, 255 - ((other_players[key].position.y-1.5)/3)*15, 2, 0, 2 * Math.PI, false);
+        context.fillStyle = 'purple';
+        context.fill();
+        context.lineWidth = 5;
+        context.strokeStyle = 'purple';
+        context.stroke();
+    }
+    context.beginPath();
+    context.arc(50 + ((player_mesh.position.x-1.5)/3)*15, 255 - ((player_mesh.position.y-1.5)/3)*15, 2, 0, 2 * Math.PI, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.lineWidth = 5;
+    context.strokeStyle = 'red';
+    context.stroke();
+
+}
+redrawCanvas();
+
 // nodes
 for(var i = 0; i < nodes.length; i++) {
     var x = nodes[i][0];
     var y = nodes[i][1];
     paths.push([]);
+
+
 
     // var node_geometry = new THREE.RingGeometry(0.5, 0.5, 32 )
     // var node_material = new THREE.MeshToonMaterial( { color: 0xc5ffff, side: THREE.DoubleSide } );
@@ -340,6 +428,7 @@ for(var i = 0; i < connections.length; i++) {
     var first_y = first[1]*scaling + 1.5;
     var second_x = second[0]*scaling + 1.5;
     var second_y = second[1]*scaling + 1.5;
+
     var length = Math.sqrt(Math.pow(first_x - second_x, 2) + Math.pow(first_y - second_y, 2))
     var node_geometry = new THREE.BoxGeometry(0.25, length, 0.025, 32 )
     var node_material = new THREE.MeshBasicMaterial( { color: 0xaddcb9 } );
@@ -408,7 +497,7 @@ function makeBuildings() {
                 building.position.x = x*2 + (Math.random()-0.5)*1;
                 building.position.y = y*2 + (Math.random()-0.5)*1;
                 building.position.z = height/2;
-                building.rotation.z = Math.random()*Math.PI
+                building.rotation.z = Math.random()*Math.PI;
                 // building.rotation.x = Math.random()*Math.PI
                 building.castShadow = true; //default is false
 
@@ -430,9 +519,15 @@ makeBuildings()
 
 function update() {
 	requestAnimationFrame( update );
+    redrawCanvas();
 	renderer.render( scene, camera );
-
-    // socket.send(JSON.stringify({"Command": "move", "x": player_mesh.position.x, "y": player_mesh.position.y}))
+    if(socket.readyState === socket.OPEN) {
+        if(old_x != player_mesh.position.x || old_y != player_mesh.position.y) {
+            socket.send(JSON.stringify({"Command": "movePos", "x": player_mesh.position.x, "y": player_mesh.position.y}));
+        }
+        old_x = player_mesh.position.x;
+        old_y = player_mesh.position.y;
+    }
 
     // for(var i = 0; i < buildings.length; i++) {
     //     buildings[i].rotation.x += 0.01*rots[i][0]*rots[i][3];
@@ -547,6 +642,13 @@ Mousetrap.bind('down', function() {
 function moved() {
     if(video_id != "None") {
         player.playVideo();
+    }
+    else {
+        if(!first_moved) {
+            first_moved = true;
+            player.loadVideoById("g4mHPeMGTJM", 0);
+            player.playVideo();
+        }
     }
 }
 
@@ -815,8 +917,8 @@ function queueMyPlaylist() {
     my_playlist.push({"Title": "(Retrieving name...)",
     "ID": vid_id,
     "Length": 300})
+    socket.send(JSON.stringify({"Command": "add", "URL" :$("#queue_input_mine").val()}))
     $("#queue_input_mine").val("");
-    // socket.send(JSON.stringify({"Command": "add", "URL" :$("#queue_input_mine").val()}))
     refreshMyPlaylist();
 }
 
@@ -834,6 +936,9 @@ function deleteMySong(index) {
 
 }
 function queueMySong(index) {
+    current_playlist.push({name: my_playlist[index]["Title"],
+    id: my_playlist[index]["ID"],
+    time: my_playlist[index]["Length"]})
     socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
-    updateNodeData(true);
+    refreshNodePlaylist();
 }

@@ -43,11 +43,12 @@
 			<button class ='accordian' id="mapbutton"> map </button>
 			<div class = "accordian-content" id="map">
 				<div>
-					<img src="static/img/dummyMap.png" alt="mapimg" class = "mapimg">
+					<!-- <img src="static/img/dummyMap.png" alt="mapimg" class = "mapimg"> -->
+					<canvas width="300px" height="270px" id="mycanvas">
 				</div>
 			</div>
 			<!--node-->
-			<button class ='accordian' id="nodebutton"> node</button>
+			<button class ='accordian' id="nodebutton">node</button>
 			<div class = "accordian-content" id="node">
 				<table class = "nodelist" id="nodetable">
 					<tr class = "nodesongrow">
@@ -65,7 +66,7 @@
 			</div>
 
 			<!--playlist-->
-			<button class ='accordian' id = "playlistbutton"> playlist </button>
+			<button class ='accordian' id = "playlistbutton">collection</button>
 			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
 				<table class = "playlist" id='playlisttable'>
 				</table>
