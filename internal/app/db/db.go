@@ -9,6 +9,7 @@ import (
 	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/models"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/volatiletech/authboss"
 )
 
 var db *gorm.DB
@@ -56,4 +57,13 @@ func AppendMediaUser(media models.Media, user models.User) {
 
 func RemoveMediaUser(media models.Media, user models.User) {
 	GetDatabase().Model(&user).Association("Medias").Delete(&media)
+}
+
+func GetPlaylist(user models.User) ([]models.Media, error) {
+	var result []models.User
+	GetDatabase().Where(models.User{Email: user.Email}).Preload("Medias").First(&result)
+	if len(result) > 0 {
+		return result[0].Medias, nil
+	}
+	return nil, authboss.ErrUserNotFound
 }

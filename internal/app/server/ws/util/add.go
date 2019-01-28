@@ -30,6 +30,12 @@ func (c AddCommand) Handle(client Client) {
 		}
 		db.AddMedia(media)
 		db.AppendMediaUser(media, *client.User)
+		response, err := CreateMediasUpdateResponse(client.User)
+		if err != nil {
+			logrus.Error("Error generating WS response:\n", err)
+			return
+		}
+		client.Send <- response
 		return
 	}
 	logrus.Warnf("Improperly formatted URL, ignoring.")
