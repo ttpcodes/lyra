@@ -44,7 +44,8 @@ button.accordian:hover {
     font-size: 20px; 
     color: #DDDDDD;
     max-height: 0px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     transition: max-height 0.2s ease-in-out;
     padding-left:0px;
     padding-right:0px;
@@ -59,6 +60,7 @@ button.accordian:hover {
 
 table {
     width: 100%;
+    
   }
 
 td.button{
@@ -69,6 +71,7 @@ td.button{
     position:relative;
     z-index:2;
 }
+
 td.trash{
     background-color: #000;
     padding:4px;
@@ -95,6 +98,7 @@ tr.songrow:hover > td.song{
 tr.nodesongrow:hover{
     background-color: #2c7394;
 }
+
 tr.songrow:hover > td.button{
     background-color: #2c7394;
     cursor:pointer;
@@ -158,7 +162,7 @@ td.song{
   }
 
   ::-webkit-scrollbar {
-  width: 10px;
+  width: 0px;
 }
 .scroll-width-none {
     scrollbar-width: none;
@@ -412,11 +416,11 @@ td.song{
   /* Modal Content */
   .modal-content {
     position: relative;
-    background-color: #fefefe;
+    background-color: #e2e2e2d7;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 60%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -443,23 +447,49 @@ td.song{
     font-weight: bold;
   }
   
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+
+.modal-header {
+padding: 2px 16px;
+background-color: #7b04aa;
+color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+padding: 2px 16px;
+background-color: #5cb85c;
+color: white;
+}
+#helpbtncontainer{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+#helpbtn{
+    color: #BBBBBB;
+  }
+#helpbtn:hover{
     cursor: pointer;
+    color: rgb(43, 160, 206)
+  }
+
+#lightbtncontainer{
+    position: absolute;
+    bottom: 10px;
+    left:50px;
+}
+#lightbtn{
+    color: #BBBBBB;
+  }
+#lightbtn:hover{
+    cursor: pointer;
+    color: rgb(43, 160, 206)!important;
   }
   
-  .modal-header {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }
-  
-  .modal-body {padding: 2px 16px;}
-  
-  .modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }

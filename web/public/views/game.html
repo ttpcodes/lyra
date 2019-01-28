@@ -34,29 +34,36 @@
 		  </div>
 	</div>
 	-->
-	<!--help button-->
-	<button id="myBtn">Open Modal</button>
+	
 	<!--tutorial-->
 	<div id="myModal" class="modal">
-
 		<!-- Modal content -->
 		<div class="modal-content">
 		  <div class="modal-header">
 			<span class="close">&times;</span>
-			<h2>Modal Header</h2>
+			<h2>Help</h2>
 		  </div>
 		  <div class="modal-body">
 			<p>Some text in the Modal Body</p>
 			<p>Some other text...</p>
 		  </div>
-		  <div class="modal-footer">
-			<h3>Modal Footer</h3>
+		  
 		  </div>
 		</div>
-	  
 	  </div>
+
 	<!--game-->
-	<div id="game"></div>
+	<div id="game">
+		<!--help button-->
+		<div id ="helpbtncontainer">
+			<i class="fas fa-question-circle fa-2x" id = "helpbtn" ></i>
+		</div>
+		<div id = "lightbtncontainer"> 
+			<i class="fas fa-lightbulb fa-2x" id = "lightbtn"></i>
+			</div>
+	</div>
+	
+	
 	<!-- UI -->
 	<div class="ui">
 		<div class = "menu" >
@@ -70,12 +77,96 @@
 			<!--node-->
 			<button class ='accordian' id="nodebutton"> node</button>
 			<div class = "accordian-content" id="node">
+				<!-- nodename-->
+				<form>
+				<div id="nodeName"  class = "addCollection" style = "border-top: 0px; border-bottom: 3px solid rgb(136, 136, 136)">
+					<input type="text" id="nodeName" name="nodeName" placeholder="Name this Node!"></input>
+					<span onclick="queueMusicNode()">Name!</span>
+				</div>
+				</form>
 				<table class = "nodelist" id="nodetable">
 					<tr class = "nodesongrow">
 						<td class ='nodesong'>
 							Nothing here! Move to a music node with arrow keys to hear some music.
 						</td>
 					</tr>
+					<!-- start-->
+					<tr class = "nodesongrow">
+							<td class ='nodesong'>
+								Nothing here! Move to a music node with arrow keys to hear some music.
+							</td>
+						</tr>
+						<tr class = "nodesongrow">
+								<td class ='nodesong'>
+									Nothing here! Move to a music node with arrow keys to hear some music.
+								</td>
+							</tr>
+							<tr class = "nodesongrow">
+									<td class ='nodesong'>
+										Nothing here! Move to a music node with arrow keys to hear some music.
+									</td>
+								</tr>
+								<tr class = "nodesongrow">
+										<td class ='nodesong'>
+											Nothing here! Move to a music node with arrow keys to hear some music.
+										</td>
+									</tr>
+									<tr class = "nodesongrow">
+											<td class ='nodesong'>
+												Nothing here! Move to a music node with arrow keys to hear some music.
+											</td>
+										</tr>
+										<tr class = "nodesongrow">
+												<td class ='nodesong'>
+													Nothing here! Move to a music node with arrow keys to hear some music.
+												</td>
+											</tr>
+											<tr class = "nodesongrow">
+													<td class ='nodesong'>
+														Nothing here! Move to a music node with arrow keys to hear some music.
+													</td>
+												</tr>
+												<tr class = "nodesongrow">
+														<td class ='nodesong'>
+															Nothing here! Move to a music node with arrow keys to hear some music.
+														</td>
+													</tr>
+													<tr class = "nodesongrow">
+															<td class ='nodesong'>
+																Nothing here! Move to a music node with arrow keys to hear some music.
+															</td>
+														</tr>
+														<tr class = "nodesongrow">
+																<td class ='nodesong'>
+																	Nothing here! Move to a music node with arrow keys to hear some music.
+																</td>
+															</tr>
+															<tr class = "nodesongrow">
+																	<td class ='nodesong'>
+																		Nothing here! Move to a music node with arrow keys to hear some music.
+																	</td>
+																</tr>
+																<tr class = "nodesongrow">
+																		<td class ='nodesong'>
+																			Nothing here! Move to a music node with arrow keys to hear some music.
+																		</td>
+																	</tr>
+																	<tr class = "nodesongrow">
+																			<td class ='nodesong'>
+																				Nothing here! Move to a music node with arrow keys to hear some music.
+																			</td>
+																		</tr>
+																		<tr class = "nodesongrow">
+																				<td class ='nodesong'>
+																					Nothing here! Move to a music node with arrow keys to hear some music.
+																				</td>
+																			</tr>
+																			<tr class = "nodesongrow">
+																					<td class ='nodesong'>
+																						Nothing here! Move to a music node with arrow keys to hear some music.
+																					</td>
+																				</tr>
+							<!-- end-->
 				</table>
 				<form>
 				<div id="queue"  class = "addCollection">
@@ -133,4 +224,5 @@
 	<script src ="static/js/accordian.js"></script>
 	<script src ="static/js/volume.js"></script>
 	<script src ="static/js/help.js"></script>
+	<script src ="static/js/light.js"></script>
 </html>
