@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/mit6148/jma22-kvfrans-ttpcodes/internal/app/stores"
 	"github.com/sirupsen/logrus"
 )
 
@@ -32,6 +33,16 @@ func (h *Hub) Execute() {
 				delete(h.clients, client)
 				close(client.Send)
 			}
+			response, err := NewLeaveResponse(client.User)
+			if err != nil {
+				logrus.Error("Error generating leave response:\n", err)
+			}
+			if err := stores.GetUserStore().Remove(client.User.ID); err != nil {
+				logrus.Error("Error removing user from store:\n", err)
+			}
+			go func() {
+				h.Broadcast <- response
+			}()
 		case message := <-h.Broadcast:
 			logrus.Debug("Received Broadcast message on WS Hub.")
 			for client := range h.clients {
