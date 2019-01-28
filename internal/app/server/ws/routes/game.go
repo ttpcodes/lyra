@@ -26,6 +26,22 @@ func GetGameHub() *util.Hub {
 	gameOnce.Do(func () {
 		gameHub = util.CreateHub()
 		go gameHub.Execute()
+
+		for _, node := range stores.GetNodeStore().All() {
+			event := *node
+			go func () {
+				for {
+					select {
+					case _ = <- event.Done:
+						response, err := util.CreateNodeDoneResponse(&event)
+						if err != nil {
+							continue
+						}
+						gameHub.Broadcast <- response
+					}
+				}
+			}()
+		}
 	})
 	return gameHub
 }
@@ -52,6 +68,8 @@ func WebsocketGameHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	user.(*models.User).Node = node
+	user.(*models.User).X = 10.5
+	user.(*models.User).Y = 13.5
 
 	client := &util.Client{
 		Conn: conn,

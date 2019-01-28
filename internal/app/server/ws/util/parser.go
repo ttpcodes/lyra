@@ -26,6 +26,13 @@ func ParseCommand(body []byte) BaseCommand {
 			return nil
 		}
 		return command
+	case "movePos":
+		command := MovePosCommand{}
+		if err := json.Unmarshal(body, &command); err != nil {
+			logrus.Warn("Error parsing command body:\n", err)
+			return nil
+		}
+		return command
 	case "queue":
 		command := QueueCommand{}
 		if err := json.Unmarshal(body, &command); err != nil {
