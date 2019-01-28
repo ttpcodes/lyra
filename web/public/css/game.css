@@ -25,7 +25,7 @@ body {
     outline:  none;
     background-color: #AAAAAA;
     font-size: 30px;
-    font-family: 'Nova Square', cursive;  
+    font-family: 'Nova Square', cursive;
     font-family: 'Major Mono Display', monospace;
     font-weight: bold;
     transition: background-color 0.2s linear;
@@ -39,9 +39,9 @@ button.accordian:hover {
 }
 .accordian-content{
     width: 100%;
-    font-family: 'Nova Square', cursive;  
+    font-family: 'Nova Square', cursive;
     font-family: 'Major Mono Display', monospace;
-    font-size: 20px; 
+    font-size: 20px;
     color: #DDDDDD;
     max-height: 0px;
     overflow-y: auto;
@@ -118,7 +118,7 @@ tr.nodesongrow{
 
 
 td.song{
-    
+
     height: 28px;
     background-color: black;
     white-space: nowrap;
@@ -172,7 +172,7 @@ td.song{
         transform: translateX(0);
     }
 
-    100% { 
+    100% {
         transform: translateX(-100%);
     }
   }
@@ -182,14 +182,14 @@ td.song{
     background-color: rgb(48, 17, 73);
     white-space: nowrap;
     font-size: 20px;
-    font-family: 'Nova Square', cursive;  
+    font-family: 'Nova Square', cursive;
     color: #CCC;
     position:sticky;
     bottom: 0px;
     padding:0px;
     margin:0px;
     border-top:3px solid rgb(136, 136, 136);
-    
+
 }
 
 .musicplayer{
@@ -210,10 +210,10 @@ td.song{
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 100%; 
-    height: 10px; 
-    background: #d3d3d3; 
-    outline: none; 
+    width: 100%;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
     padding:1px;
     border:0px;
     border: 1px solid rgb(15, 4, 49);
@@ -228,7 +228,7 @@ td.song{
     height: 10px; /* Slider handle height */
     background: #000; /* Green background */
   }
-  
+
   .slider::-moz-range-thumb {
     -moz-appearance: none; /* Override default look */
     appearance: none;
@@ -239,7 +239,7 @@ td.song{
   }
 
   .nowPlaying{
-    
+
     height: 28px;
     position:absolute;
     white-space: nowrap;
@@ -250,15 +250,15 @@ td.song{
     margin:0px;
     bottom:7px;
     left: 80px;
-    
-    
+
+
     animation: sidescroll 12s linear infinite;
     z-index: -1;
   }
   .nowPlayingSign{
     width: 73px;
     height:35px;
-    
+
     position:relative;
     font-size: 20px;
     font-family: 'Nova Square', cursive;
@@ -267,7 +267,7 @@ td.song{
     padding-bottom:12px;
     padding-left:3px;
     background-color: rgb(6, 0, 10);
-  } 
+  }
   #skip{
     width: 65px;
     height:32px;
@@ -280,7 +280,7 @@ td.song{
     background-color: rgb(58, 20, 88);
     border: 1px;
     opacity: 0.8;
-    } 
+    }
 
     #skip:hover{
         cursor:pointer;
@@ -288,7 +288,7 @@ td.song{
     }
 
 .addbutton{
-    display: inline-block; 
+    display: inline-block;
     width:70px;
     margin:0px;
 }
@@ -341,18 +341,18 @@ td.song{
 .preloader-1 .line-8  { animation-delay: 600ms; }
 .preloader-1 .line-9  { animation-delay: 800ms; }
 
-@keyframes opacity-1 { 
-  0% { 
+@keyframes opacity-1 {
+  0% {
     opacity: 1;
   }
-  50% { 
+  50% {
     opacity: 0;
   }
-  100% { 
+  100% {
     opacity: 1;
-  }  
+  }
 }
-                                                                                                                                                                                                            
+
 .volumeicon{
     opacity: 0.8;
     color: white;
@@ -373,8 +373,8 @@ td.song{
     width: 180px;
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    background: rgb(184, 203, 211); 
-    outline: none; 
+    background: rgb(184, 203, 211);
+    outline: none;
     height: 4px;
     border: 1px solid rgb(4, 36, 49);
 
@@ -389,11 +389,11 @@ td.song{
     background: rgb(47, 141, 175); /* Green background */
     border:0px solid rgb(36, 79, 172);
   }
-  
+
   .volume::-moz-range-thumb {
     -moz-appearance: none; /* Override default look */
     appearance: none;
-    
+
     width: 1px; /* Set a specific slider handle width */
     height: 10px; /* Slider handle height */
     background: #000; /* Green background */
