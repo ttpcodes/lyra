@@ -39,3 +39,11 @@ func (s UserStore) Get(id uint) (*models.User, error) {
 	}
 	return &models.User{}, errors.New("index out of range")
 }
+
+func (s UserStore) Remove(id uint) error {
+	if _, ok := s.items[id]; ok {
+		delete(s.items, id)
+		return nil
+	}
+	return errors.New("index out of range")
+}
