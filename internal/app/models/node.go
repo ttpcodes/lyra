@@ -1,9 +1,14 @@
 package models
 
-import "time"
+import (
+	"github.com/sirupsen/logrus"
+	"time"
+)
 
 type Node struct {
 	ticker *time.Ticker
+
+	Done chan struct{} `json:"-"`
 
 	ID uint
 
@@ -14,6 +19,7 @@ type Node struct {
 func NewNode(id uint) *Node {
 	return &Node{
 		CurrentTime: 0,
+		Done: make(chan struct{}),
 		ID: id,
 		Playlist: make([]Media, 0),
 		ticker: time.NewTicker(1 * time.Second),
@@ -42,5 +48,9 @@ func (n *Node) Next() {
 	if len(n.Playlist) > 0 {
 		n.Playlist = n.Playlist[1:]
 		n.CurrentTime = 0
+	}
+	if len(n.Playlist) == 0 {
+		logrus.Infof("done %d", n.ID)
+		n.Done <- struct{}{}
 	}
 }

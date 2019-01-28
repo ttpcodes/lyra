@@ -30,6 +30,10 @@ func (s *NodeStore) Add(n *models.Node) {
 	s.items[n.ID] = n
 }
 
+func (s NodeStore) All() map[uint]*models.Node {
+	return s.items
+}
+
 func (s *NodeStore) Get(id uint) (*models.Node, error) {
 	if val, ok := s.items[id]; ok {
 		return val, nil
