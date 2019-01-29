@@ -27,9 +27,10 @@ func CreateRouter() {
 
 	fs := http.FileServer(web.HTTP)
 
+	r.Path("/auth/login").HandlerFunc(auth.RedirectHandler).Methods("GET")
 	r.PathPrefix("/auth").Handler(http.StripPrefix("/auth", ab.Config.Core.Router))
 
-	a := authboss.Middleware2(ab, authboss.RequireNone, authboss.RespondUnauthorized)
+	a := authboss.Middleware2(ab, authboss.RequireNone, authboss.RespondRedirect)
 
 	n := r.PathPrefix("/nodes").Subrouter()
 	n.Use(a)
