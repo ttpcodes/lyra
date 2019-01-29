@@ -421,5 +421,17 @@ visibility: visible;
 }
 
 
+.loginerror{
+  bottom: 370px;
+  position: absolute;
+  right:36px;
+  font-family: 'Major Mono Display', monospace;
+  color:rgb(201, 62, 62);
+  opacity: 1;
+  font-weight: 900;
+  visibility:hidden;
+  text-align: right;
+  
+}
      
     

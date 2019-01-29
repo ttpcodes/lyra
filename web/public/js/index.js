@@ -62,8 +62,6 @@ onkeypress = function(){
     hometextdiv.className= "appear animated fadeInDown delay-3s slower props";
     counter+=1;
   }
-    //call a function     
-       //element.classList.add("run-animation");
 }
 
 $('#navbar li a').click(function() {
