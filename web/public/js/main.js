@@ -147,6 +147,9 @@ socket.addEventListener('message', (event) => {
             }
         }
     }
+    else if(message["Command"] == "nodeDone") {
+        node_meshes[message["Node"]["ID"]].material.color.setHex( 0x9ff7d5 );
+    }
 })
 
 
@@ -568,6 +571,10 @@ function update() {
                 node_ring_meshes[i].scale.x = 1;
                 node_ring_meshes[i].scale.y = 1;
             }
+        }
+        else {
+            node_ring_meshes[i].scale.x = 1;
+            node_ring_meshes[i].scale.y = 1;
         }
     }
 
