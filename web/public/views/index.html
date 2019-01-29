@@ -4,9 +4,9 @@
         <title>Lyra - home</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">       
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link href ="/static/css/index.css" rel = "stylesheet">
-        
+
     </head>
 
     <body scroll="no" style="overflow: hidden">
@@ -19,7 +19,7 @@
             <div id="particles-js" style = "width:100%;
             height:100%"></div>
     </div>
-    
+
     <!--MuteMeDaddy-->
     <div >
         <i id="mutebutton" class="fas fa-volume-up fa-2x" style = "color:#DDDDDD; position: absolute; bottom:4px; right: 4px; opacity: 0.8; cursor:pointer;"></i>
@@ -29,7 +29,7 @@
     <div >
         <i id="stopbutton" class="fas fa-desktop fa-2x" style = "color:#DDDDDD; position: absolute; bottom:4px; right: 50px; opacity: 0.8; cursor:pointer;"></i>
     </div>
-          
+
     <!--text-->
     <div id = "textfadeout">
         <div id = "cover_text" class="center home_text flicker">
@@ -50,21 +50,21 @@
                 <p>
                     Music among the stars
                 </p>
-        </div>  
+        </div>
     </div>
 
     <!--AboutText-->
     <div id ="abouttextdiv" class = "propstwo">
         <div class = "bigtwo">
             <p>
-                About   
+                About
             </p>
         </div>
         <div class = "smalltwo">
-            <p>                
+            <p>
                 ok
             </p>
-        </div>  
+        </div>
     </div>
 
     <!--logintext-->
@@ -75,8 +75,8 @@
             </p>
         </div>
 
-        <div class = "smallthree">            
-            <form class="form-signin" method="post" action="/auth/login">
+        <div class = "smallthree">
+            <form class="form-signin" method="post" id="loginform">
                 <div class="form-label-group emlabel">
                     <label for="inputEmail">Email address</label>
                     <input type="email" id="loginEmail" name="email" class="form-control inputboxone" placeholder="Email address" required autofocus>
@@ -85,9 +85,9 @@
                     <label for="inputPassword">Password</label>
                     <input type="password" id="inputPassword" name="password" class="form-control inputboxtwo" placeholder="Password" required>
                 </div>
-                <button class="btn btn-md btn-primary text-uppercase signin" type="submit">Sign in</button>   
+                <button class="btn btn-md btn-primary text-uppercase signin" onclick="login()">Sign in</button>
             </form>
-        </div>  
+        </div>
     </div>
 
     <!--registertext-->
@@ -98,7 +98,7 @@
             </p>
         </div>
 
-        <div class = "smallthree">            
+        <div class = "smallthree">
             <form class="form-signin" action="/auth/register" method="post">
                 <div class="form-label-group emlabel">
                     <label for="registerEmail">Email address</label>
@@ -112,9 +112,9 @@
                     <label for="inputPassword">Password</label>
                     <input type="password" id="RegisterPassword" class="form-control inputboxthree" placeholder="Password" required name="password">
                 </div>
-                <button class="btn btn-md btn-primary text-uppercase signin2" type="submit">Signup</button>   
+                <button class="btn btn-md btn-primary text-uppercase signin2" type="submit">Signup</button>
             </form>
-        </div>  
+        </div>
     </div>
      <!--Audio-->
      <audio loop id="bgm">
@@ -140,7 +140,7 @@
                         <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
-           
+
                 <ul class="navbar-nav">
                     <li id = "login" class="nav-item pl-2">
                         <a class="nav-link" href="#">Login</a>
@@ -150,10 +150,10 @@
                     </li>
                 </ul>
             </div>
-        </nav> 
+        </nav>
     </div>
 
-    
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -166,5 +166,3 @@
     </script>
     </body>
 </html>
-    
-

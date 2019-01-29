@@ -3,27 +3,27 @@ var state = 0;
 var counter = 0;
 var animation = 1;
 
-function playAudio() { 
-  bgm.play(); 
-} 
+function playAudio() {
+  bgm.play();
+}
 
 var stopbutton = document.getElementById("stopbutton");
 var background = document.getElementById("background");
 var blackscreen = document.getElementById("blackscreen");
 $('#stopbutton').click(function() {toggleAnimation()});
 
-function toggleAnimation() { 
+function toggleAnimation() {
   console.log("no u");
   if (animation == 1){
     background.classList.remove("picture-flicker")
     stopbutton.style.color = "rgb(216, 57, 57)";
-    
+
       animation = 0;
   }
   else{
     background.classList.add("picture-flicker")
     stopbutton.style.color = "#DEDEDE";
-    
+
     animation = 1;
   }
 }
@@ -32,7 +32,7 @@ function toggleAnimation() {
 var mutebutton = document.getElementById("mutebutton");
 $('#mutebutton').click(function() {toggleAudio()});
 
-function toggleAudio() { 
+function toggleAudio() {
   if (bgm.muted){
     bgm.muted = false;
     mutebutton.className = "fas fa-volume-up fa-2x";
@@ -48,8 +48,8 @@ $('.navbar-nav>li>a').on('click', function(){
 });
 
 onkeypress = function(){
-  if (counter == 0){ 
-    var bgm = document.getElementById("bgm"); 
+  if (counter == 0){
+    var bgm = document.getElementById("bgm");
     bgm.play();
     var covertext = document.getElementById("cover_text");
     covertext.classList.remove("flicker");
@@ -62,7 +62,7 @@ onkeypress = function(){
     hometextdiv.className= "appear animated fadeInDown delay-3s slower props";
     counter+=1;
   }
-    //call a function     
+    //call a function
        //element.classList.add("run-animation");
 }
 
@@ -93,7 +93,7 @@ $('#navbar li a').click(function() {
     updatescreen();
     return;
   }
-  
+
 });
 
 function updatescreen(){
@@ -117,12 +117,12 @@ function updatescreen(){
   if (state==1){
     hometextdiv.className = "animated fadeInDown slower props appear";
     home.classList.add("active");
-  } 
-  if (state ==2){ 
+  }
+  if (state ==2){
     abouttextdiv.className = "animated fadeInDown slower propstwo appear";
     about.classList.add("active");
   }
-  if (state ==3){ 
+  if (state ==3){
     logintextdiv.className = "animated fadeInDown slower propsthree appear";
     login.classList.add("active");
   }
@@ -130,4 +130,11 @@ function updatescreen(){
     registertextdiv.className = "animated fadeInDown slower propsthree appear";
     register.classList.add("active");
   }
+}
+
+
+function login() {
+    $.post("/auth/login", $("loginform").serialize(), function(data) {
+        alert(data);
+    });
 }
