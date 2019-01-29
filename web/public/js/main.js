@@ -947,9 +947,9 @@ function queueMusicNode() {
             vid_id = vid_id.substring(0, ampersandPosition);
         }
         socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
-        current_playlist.push({name: "(Retrieving name...)",
-        id: vid_id,
-        time: 300})
+        current_playlist.push({"Title": "(Retrieving name...)",
+        "ID": vid_id,
+        "Length": 300})
         $("#queue_input").val("");
         console.log("lmao")
         refreshNodePlaylist();
@@ -994,9 +994,9 @@ function queueMySong(index) {
         document.getElementById('myModal2').style.display = "block";
     }
     else {
-        current_playlist.push({name: my_playlist[index]["Title"],
-        id: my_playlist[index]["ID"],
-        time: my_playlist[index]["Length"]})
+        current_playlist.push({"Title": my_playlist[index]["Title"],
+        "ID": my_playlist[index]["ID"],
+        "Length": my_playlist[index]["Length"]})
         socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
         refreshNodePlaylist();
     }
