@@ -147,6 +147,9 @@ socket.addEventListener('message', (event) => {
             }
         }
     }
+    else if(message["Command"] == "nodeDone") {
+        node_meshes[message["Node"]["ID"]].material.color.setHex( 0x9ff7d5 );
+    }
 })
 
 
@@ -569,6 +572,10 @@ function update() {
                 node_ring_meshes[i].scale.y = 1;
             }
         }
+        else {
+            node_ring_meshes[i].scale.x = 1;
+            node_ring_meshes[i].scale.y = 1;
+        }
     }
 
 
@@ -915,18 +922,23 @@ $("#queue_input").keypress(function (e) {
   }
 });
 function queueMusicNode() {
-    var vid_id = $("#queue_input").val().split('v=')[1];
-    var ampersandPosition = vid_id.indexOf('&');
-    if(ampersandPosition != -1) {
-        vid_id = vid_id.substring(0, ampersandPosition);
+    if(curr_node == 4) {
+        document.getElementById('myModal2').style.display = "block";
     }
-    socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
-    current_playlist.push({name: "(Retrieving name...)",
-    id: vid_id,
-    time: 300})
-    $("#queue_input").val("");
-    console.log("lmao")
-    refreshNodePlaylist();
+    else {
+        var vid_id = $("#queue_input").val().split('v=')[1];
+        var ampersandPosition = vid_id.indexOf('&');
+        if(ampersandPosition != -1) {
+            vid_id = vid_id.substring(0, ampersandPosition);
+        }
+        socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
+        current_playlist.push({name: "(Retrieving name...)",
+        id: vid_id,
+        time: 300})
+        $("#queue_input").val("");
+        console.log("lmao")
+        refreshNodePlaylist();
+    }
 }
 
 $("#queue_input_mine").keypress(function (e) {
@@ -963,9 +975,14 @@ function deleteMySong(index) {
 
 }
 function queueMySong(index) {
-    current_playlist.push({name: my_playlist[index]["Title"],
-    id: my_playlist[index]["ID"],
-    time: my_playlist[index]["Length"]})
-    socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
-    refreshNodePlaylist();
+    if(curr_node == 4) {
+        document.getElementById('myModal2').style.display = "block";
+    }
+    else {
+        current_playlist.push({name: my_playlist[index]["Title"],
+        id: my_playlist[index]["ID"],
+        time: my_playlist[index]["Length"]})
+        socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
+        refreshNodePlaylist();
+    }
 }
