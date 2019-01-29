@@ -416,11 +416,10 @@ td.song{
   /* Modal Content */
   .modal-content {
     position: relative;
-    background-color: #e2e2e2d7;
+    background-color: #696969d7;
     margin: auto;
     padding: 0;
-    border: 1px solid #888;
-    width: 60%;
+    width: 70%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -455,18 +454,21 @@ cursor: pointer;
 }
 
 .modal-header {
-padding: 2px 16px;
-background-color: #7b04aa;
-color: white;
+padding: 6px 16px;
+background-color: #3d3847;
+color: rgb(207, 207, 207);
+font-family: 'Nova Square', cursive;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body {padding: 6px 16px;
+height: 100%;
+width: 100%;}
 
-.modal-footer {
-padding: 2px 16px;
-background-color: #5cb85c;
-color: white;
+.tutorialimg{
+    height: 100%;
+    width:100%;
 }
+
 #helpbtncontainer{
     position: absolute;
     bottom: 10px;

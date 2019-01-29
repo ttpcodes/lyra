@@ -4,12 +4,11 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/authboss"
+	"github.com/volatiletech/authboss-clientstate"
 	"github.com/volatiletech/authboss/defaults"
 
 	_ "github.com/volatiletech/authboss/auth"
 	_ "github.com/volatiletech/authboss/register"
-
-	"github.com/volatiletech/authboss-clientstate"
 )
 
 var ab *authboss.Authboss
@@ -17,6 +16,9 @@ var ab *authboss.Authboss
 func CreateAuth(storer UserStorer) {
 	ab = authboss.New()
 	ab.Config.Core.ViewRenderer = defaults.JSONRenderer{}
+
+	// For some reason defaults needs to be placed here. Not going to question it.
+	defaults.SetCore(&ab.Config, true, false)
 	ab.Config.Modules.RegisterPreserveFields = []string{"email", "username"}
 	ab.Config.Paths.Mount = "/auth"
 	ab.Config.Storage.CookieState = abclientstate.NewCookieStorer([]byte("hentai"), nil)
@@ -27,9 +29,6 @@ func CreateAuth(storer UserStorer) {
 	cstore := sessionStore.Store.(*sessions.CookieStore)
 	cstore.Options.HttpOnly = false
 	cstore.Options.Secure = false
-
-	// For some reason defaults needs to be placed here. Not going to question it.
-	defaults.SetCore(&ab.Config, true, false)
 	emailRule := defaults.Rules{
 		FieldName: "email",
 		MatchError: "Must be a valid email address.",
@@ -46,6 +45,7 @@ func CreateAuth(storer UserStorer) {
 		Required: true,
 	}
 	ab.Config.Core.BodyReader = defaults.HTTPBodyReader{
+		ReadJSON: true,
 		Rulesets: map[string][]defaults.Rules{
 			"register": {emailRule, passwordRule, usernameRule},
 		},
