@@ -60,7 +60,7 @@ button.accordian:hover {
 
 table {
     width: 100%;
-    
+
   }
 
 td.button{
@@ -412,7 +412,21 @@ td.song{
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  
+
+  .modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
   /* Modal Content */
   .modal-content {
     position: relative;
@@ -426,18 +440,33 @@ td.song{
     animation-name: animatetop;
     animation-duration: 0.4s
   }
-  
+
+  /* Modal Content */
+  .modal-content2 {
+    position: relative;
+    background-color: #696969d7;
+    color: white;
+    margin: auto;
+    padding: 0;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+
   /* Add Animation */
   @-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
+    from {top:-300px; opacity:0}
     to {top:0; opacity:1}
   }
-  
+
   @keyframes animatetop {
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
   }
-  
+
   /* The Close Button */
   .close {
     color: white;
@@ -445,7 +474,14 @@ td.song{
     font-size: 28px;
     font-weight: bold;
   }
-  
+
+  .close2 {
+    color: white;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
 .close:hover,
 .close:focus {
 color: #000;
@@ -454,6 +490,13 @@ cursor: pointer;
 }
 
 .modal-header {
+padding: 6px 16px;
+background-color: #3d3847;
+color: rgb(207, 207, 207);
+font-family: 'Nova Square', cursive;
+}
+
+.modal-header2 {
 padding: 6px 16px;
 background-color: #3d3847;
 color: rgb(207, 207, 207);
@@ -494,4 +537,3 @@ width: 100%;}
     cursor: pointer;
     color: rgb(43, 160, 206)!important;
   }
-  
