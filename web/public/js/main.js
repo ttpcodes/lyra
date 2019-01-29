@@ -102,7 +102,7 @@ socket.addEventListener('message', (event) => {
             // console.log(message["Node"]["CurrentTime"])
             // console.log(current_time)
             // console.log(Math.abs(message["Node"]["CurrentTime"] - current_time))
-            // console.log(new_vid);
+            console.log(new_vid);
             // console.log(message["Node"]["Playlist"][0]["ID"])
             // console.log(current_playlist[0]["ID"])
             current_playlist = message["Node"]["Playlist"]
@@ -783,6 +783,7 @@ function updateNodeData(force_update) {
         var msg = JSON.parse(data)
         current_playlist = msg["Playlist"]
         current_time = msg["CurrentTime"]
+        console.log(msg);
         if(current_playlist.length == 0) {
             video_id = "None";
             player.pauseVideo();
@@ -948,7 +949,7 @@ function queueMusicNode() {
         }
         socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
         current_playlist.push({"Title": "(Retrieving name...)",
-        "ID": vid_id,
+        "ID": "None",
         "Length": 300})
         $("#queue_input").val("");
         console.log("lmao")
@@ -995,7 +996,7 @@ function queueMySong(index) {
     }
     else {
         current_playlist.push({"Title": my_playlist[index]["Title"],
-        "ID": my_playlist[index]["ID"],
+        "ID": "None",
         "Length": my_playlist[index]["Length"]})
         socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
         refreshNodePlaylist();
@@ -1003,7 +1004,6 @@ function queueMySong(index) {
 }
 
 function saveSong(index) {
-
     my_playlist.push({"Title": current_playlist[index]["Title"],
     "ID": current_playlist[index]["ID"],
     "Length": current_playlist[index]["Length"]})
