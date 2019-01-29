@@ -93,7 +93,7 @@ socket.addEventListener('message', (event) => {
         if(message["Node"]["ID"] == curr_node) {
             console.log(current_playlist);
             var new_vid = false;
-            if(message["Node"]["Playlist"].length == 0) {
+            if(message["Node"]["Playlist"].length == 0 || current_playlist.length == 0) {
                 new_vid = true;
             }
             else {
