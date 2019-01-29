@@ -112,7 +112,7 @@ function updatescreen(){
   about.classList.remove("active");
   login.classList.remove("active");
   register.classList.remove("active");
-  loginerror.style.visibility = " hidden";
+  loginerror.style.visibility = "hidden";
 
   if (state==1){
     hometextdiv.className = "animated fadeInDown slower props appear";
@@ -133,13 +133,28 @@ function updatescreen(){
 }
 
 
-function login() {
-    $.post("/auth/login", $("loginform").serialize(), function(data) {
-        if (data){
-          //redirect
-        }
-        else{
-          loginerror.style.visibility = "visible";
-        }
-    });
-}
+$('#loginform').on('submit', (event) => {
+  event.preventDefault()
+  let temp = $("#loginform").serializeArray()
+  let form = {}
+  for (let i of temp) {
+    form[i.name] = i.value
+  }
+  $.ajax({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify(form),
+    dataType: 'json',
+    success: () => {
+      loginerror.style.visibility = "visible"
+    },
+    method: 'POST',
+    url: '/auth/login',
+    statusCode: {
+      307: () => {
+        location.reload()
+      }
+    }
+  })
+})
