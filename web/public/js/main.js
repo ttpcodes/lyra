@@ -92,7 +92,19 @@ socket.addEventListener('message', (event) => {
 
         if(message["Node"]["ID"] == curr_node) {
             console.log(current_playlist);
-            var new_vid = message["Node"]["ID"] != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
+            var new_vid = false;
+            if(message["Node"]["Playlist"].length == 0) {
+                new_vid = true;
+            }
+            else {
+                new_vid = message["Node"]["Playlist"][0]["ID"] != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
+            }
+            // console.log(message["Node"]["CurrentTime"])
+            // console.log(current_time)
+            // console.log(Math.abs(message["Node"]["CurrentTime"] - current_time))
+            // console.log(new_vid);
+            // console.log(message["Node"]["Playlist"][0]["ID"])
+            // console.log(current_playlist[0]["ID"])
             current_playlist = message["Node"]["Playlist"]
             current_time = message["Node"]["CurrentTime"]
             if(current_playlist.length == 0) {
