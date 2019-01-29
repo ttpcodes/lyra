@@ -2,6 +2,7 @@
 var state = 0;
 var counter = 0;
 var animation = 1;
+var loginerror = document.getElementById("loginerror");
 
 function playAudio() {
   bgm.play();
@@ -111,6 +112,7 @@ function updatescreen(){
   about.classList.remove("active");
   login.classList.remove("active");
   register.classList.remove("active");
+  loginerror.style.visibility = " hidden";
 
   if (state==1){
     hometextdiv.className = "animated fadeInDown slower props appear";
@@ -133,6 +135,11 @@ function updatescreen(){
 
 function login() {
     $.post("/auth/login", $("loginform").serialize(), function(data) {
-        alert(data);
+        if (data){
+          //redirect
+        }
+        else{
+          loginerror.style.visibility = "visible";
+        }
     });
 }
