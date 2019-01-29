@@ -158,3 +158,29 @@ $('#loginform').on('submit', (event) => {
     }
   })
 })
+
+$('#register-form').on('submit', (event) => {
+  event.preventDefault()
+  let temp = $("#register-form").serializeArray()
+  let form = {}
+  for (let i of temp) {
+    form[i.name] = i.value
+  }
+  $.ajax({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify(form),
+    dataType: 'json',
+    success: () => {
+
+    },
+    method: 'POST',
+    url: '/auth/register',
+    statusCode: {
+      307: () => {
+        location.reload()
+      }
+    }
+  })
+})
