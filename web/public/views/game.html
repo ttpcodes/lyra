@@ -34,7 +34,7 @@
 		  </div>
 	</div>
 	-->
-	
+
 	<!--tutorial-->
 	<div id="myModal" class="modal">
 		<!-- Modal content -->
@@ -46,7 +46,7 @@
 		  <div class="modal-body">
 				<img src="static/img/tutorial.PNG" alt="tutorialimg" class = tutorialimg>
 		  </div>
-		  
+
 		  </div>
 		</div>
 	  </div>
@@ -57,12 +57,12 @@
 		<div id ="helpbtncontainer">
 			<i class="fas fa-question-circle fa-2x" id = "helpbtn" ></i>
 		</div>
-		<div id = "lightbtncontainer"> 
+		<div id = "lightbtncontainer">
 			<i class="fas fa-lightbulb fa-2x" id = "lightbtn"></i>
 			</div>
 	</div>
-	
-	
+
+
 	<!-- UI -->
 	<div class="ui">
 		<div class = "menu" >
@@ -77,13 +77,6 @@
 			<!--node-->
 			<button class ='accordian' id="nodebutton">node</button>
 			<div class = "accordian-content" id="node">
-				<!-- nodename-->
-				<form>
-				<div id="nodeName"  class = "addCollection" style = "border-top: 0px; border-bottom: 3px solid rgb(136, 136, 136)">
-					<input type="text" id="nodeName" name="nodeName" placeholder="Name this Node!"></input>
-					<span onclick="queueMusicNode()">Name!</span>
-				</div>
-				</form>
 				<table class = "nodelist" id="nodetable">
 					<tr class = "nodesongrow">
 						<td class ='nodesong'>
@@ -91,117 +84,6 @@
 						</td>
 					</tr>
 					<!--test-->
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-						<td class ='nodesong'>
-							Nothing here! Move to a music node with arrow keys to hear some music.
-						</td>
-					</tr>
-					<tr class = "nodesongrow">
-							<td class ='nodesong'>
-								Nothing here! Move to a music node with arrow keys to hear some music.
-							</td>
-						</tr>
-						<tr class = "nodesongrow">
-							<td class ='nodesong'>
-								Nothing here! Move to a music node with arrow keys to hear some music.
-							</td>
-						</tr>
-						<tr class = "nodesongrow">
-							<td class ='nodesong'>
-								Nothing here! Move to a music node with arrow keys to hear some music.
-							</td>
-						</tr>
-						<tr class = "nodesongrow">
-							<td class ='nodesong'>
-								Nothing here! Move to a music node with arrow keys to hear some music.
-							</td>
-						</tr>
-						<tr class = "nodesongrow">
-							<td class ='nodesong'>
-								Nothing here! Move to a music node with arrow keys to hear some music.
-							</td>
-						</tr>
-						<tr class = "nodesongrow">
-								<td class ='nodesong'>
-									Nothing here! Move to a music node with arrow keys to hear some music.
-								</td>
-							</tr>
-							<tr class = "nodesongrow">
-								<td class ='nodesong'>
-									Nothing here! Move to a music node with arrow keys to hear some music.
-								</td>
-							</tr>
-							<tr class = "nodesongrow">
-								<td class ='nodesong'>
-									Nothing here! Move to a music node with arrow keys to hear some music.
-								</td>
-							</tr>
-							<tr class = "nodesongrow">
-								<td class ='nodesong'>
-									Nothing here! Move to a music node with arrow keys to hear some music.
-								</td>
-							</tr>
-							<tr class = "nodesongrow">
-								<td class ='nodesong'>
-									Nothing here! Move to a music node with arrow keys to hear some music.
-								</td>
-							</tr>
-					<!--end-->
 				</table>
 				<form>
 				<div id="queue"  class = "addCollection">
@@ -215,114 +97,6 @@
 			<button class ='accordian' id = "playlistbutton">collection</button>
 			<div class = "accordian-content scrollbar-width-none" id = "playlist" style ="overflow-y: auto">
 				<table class = "playlist" id='playlisttable'>
-						<tr class = 'songrow'>
-							<td class = 'trash'>
-								<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-							</td>
-							<td class = 'button'>
-								<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-							</td>
-							<td class ='song' onclick='queueMySong("+i+")'>
-							</td></tr>
-							<tr class = 'songrow'>
-									<td class = 'trash'>
-										<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-									</td>
-									<td class = 'button'>
-										<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-									</td>
-									<td class ='song' onclick='queueMySong("+i+")'>
-									</td></tr>
-									<tr class = 'songrow'>
-											<td class = 'trash'>
-												<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-											</td>
-											<td class = 'button'>
-												<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-											</td>
-											<td class ='song' onclick='queueMySong("+i+")'>
-											</td></tr>
-											<tr class = 'songrow'>
-													<td class = 'trash'>
-														<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-													</td>
-													<td class = 'button'>
-														<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-													</td>
-													<td class ='song' onclick='queueMySong("+i+")'>
-													</td></tr>
-													<tr class = 'songrow'>
-															<td class = 'trash'>
-																<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-															</td>
-															<td class = 'button'>
-																<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-															</td>
-															<td class ='song' onclick='queueMySong("+i+")'>
-															</td></tr>
-															<tr class = 'songrow'>
-																	<td class = 'trash'>
-																		<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-																	</td>
-																	<td class = 'button'>
-																		<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-																	</td>
-																	<td class ='song' onclick='queueMySong("+i+")'>
-																	</td></tr>
-																	<tr class = 'songrow'>
-																			<td class = 'trash'>
-																				<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-																			</td>
-																			<td class = 'button'>
-																				<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-																			</td>
-																			<td class ='song' onclick='queueMySong("+i+")'>
-																			</td></tr>
-																			<tr class = 'songrow'>
-																					<td class = 'trash'>
-																						<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-																					</td>
-																					<td class = 'button'>
-																						<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-																					</td>
-																					<td class ='song' onclick='queueMySong("+i+")'>
-																					</td></tr>
-																					<tr class = 'songrow'>
-																							<td class = 'trash'>
-																								<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-																							</td>
-																							<td class = 'button'>
-																								<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-																							</td>
-																							<td class ='song' onclick='queueMySong("+i+")'>
-																							</td></tr>
-																							<tr class = 'songrow'>
-							<td class = 'trash'>
-								<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-							</td>
-							<td class = 'button'>
-								<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-							</td>
-							<td class ='song' onclick='queueMySong("+i+")'>
-							</td></tr>
-							<tr class = 'songrow'>
-							<td class = 'trash'>
-								<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-							</td>
-							<td class = 'button'>
-								<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-							</td>
-							<td class ='song' onclick='queueMySong("+i+")'>
-							</td></tr>
-							<tr class = 'songrow'>
-									<td class = 'trash'>
-										<i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i>
-									</td>
-									<td class = 'button'>
-										<i onclick='queueMySong("+i+")'' class='fas fa-plus' style = 'position:relative;'></i>
-									</td>
-									<td class ='song' onclick='queueMySong("+i+")'>
-									</td></tr>
 
 				</table>
 			<form>

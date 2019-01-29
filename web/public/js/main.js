@@ -81,11 +81,13 @@ socket.addEventListener('message', (event) => {
         console.log("nodeupdate");
         console.log(message["Node"])
 
-        if(message["Node"]["Playlist"].length > 0) {
-            node_meshes[message["Node"]["ID"]].material.color.setHex( 0xe74c3c );
-        }
-        else {
-            node_meshes[message["Node"]["ID"]].material.color.setHex( 0x9ff7d5 );
+        if(message["Node"]["ID"] != 4) {
+            if(message["Node"]["Playlist"].length > 0) {
+                node_meshes[message["Node"]["ID"]].material.color.setHex( 0xe74c3c );
+            }
+            else {
+                node_meshes[message["Node"]["ID"]].material.color.setHex( 0x9ff7d5 );
+            }
         }
 
         if(message["Node"]["ID"] == curr_node) {
@@ -254,9 +256,21 @@ var lightz = new THREE.HemisphereLight( 0x272056, 0xbf5cbe, 0.2 );
 // light.shadow.bias = 0.0001;
 // scene.add(light);
 
+function light_off() {
+    scene.remove(light)
+    scene.remove(light2)
+    scene.add(am_light)
+}
+
+function light_on() {
+    scene.add(light)
+    scene.add(light2)
+    scene.remove(am_light)
+}
+
 // build the floor
 var floor_geometry = new THREE.PlaneGeometry(230, 230);
-var floor_material = new THREE.MeshBasicMaterial( { color: 0x333333 } );
+var floor_material = new THREE.MeshToonMaterial( { color: 0x333333 } );
 var floor_mesh = new THREE.Mesh(floor_geometry, floor_material);
 floor_mesh.position.x = 7.5
 floor_mesh.position.y = 7.5
@@ -265,7 +279,7 @@ scene.add(floor_mesh)
 
 // build the player
 var player_geometry = new THREE.DodecahedronGeometry(0.2);
-var player_material = new THREE.MeshBasicMaterial( { color: 0xe6b0c2 } );
+var player_material = new THREE.MeshToonMaterial( { color: 0xe6b0c2 } );
 var player_mesh = new THREE.Mesh(player_geometry, player_material);
 player_mesh.position.x = 1.5
 player_mesh.position.y = 1.5
@@ -335,15 +349,6 @@ var context = canvas.getContext('2d');
 
 function redrawCanvas() {
     context.clearRect(0, 0, 300, 270);
-    for(var i = 0; i < nodes.length; i++) {
-        context.beginPath();
-        context.arc(50 + nodes[i][0]*15, 250 - nodes[i][1]*14, 2, 0, 2 * Math.PI, false);
-        context.fillStyle = 'gray';
-        context.fill();
-        context.lineWidth = 5;
-        context.strokeStyle = 'gray';
-        context.stroke();
-    }
     for(var i = 0; i < connections.length; i++) {
         var first = nodes[connections[i][0]];
         var second = nodes[connections[i][1]];
@@ -352,6 +357,23 @@ function redrawCanvas() {
         context.beginPath();
         context.moveTo(50 + first[0]*15, 250 - first[1]*14);
         context.lineTo(50 + second[0]*15, 250 - second[1]*14);
+        context.stroke();
+    }
+    for(var i = 0; i < nodes.length; i++) {
+        if(node_meshes.length > 0 && node_meshes[i].material.color.equals(new THREE.Color( 0xe74c3c ))) {
+            context.fillStyle = 'red';
+            context.strokeStyle = 'red';
+        }
+        else {
+            context.fillStyle = 'gray';
+            context.strokeStyle = 'gray';
+        }
+        context.beginPath();
+        context.arc(50 + nodes[i][0]*15, 250 - nodes[i][1]*14, 2, 0, 2 * Math.PI, false);
+
+        context.fill();
+        context.lineWidth = 5;
+
         context.stroke();
     }
     for (var key in other_players) {
@@ -365,10 +387,10 @@ function redrawCanvas() {
     }
     context.beginPath();
     context.arc(50 + ((player_mesh.position.x-1.5)/3)*15, 255 - ((player_mesh.position.y-1.5)/3)*15, 2, 0, 2 * Math.PI, false);
-    context.fillStyle = 'red';
+    context.fillStyle = 'blue';
     context.fill();
     context.lineWidth = 5;
-    context.strokeStyle = 'red';
+    context.strokeStyle = 'blue';
     context.stroke();
 
 }
@@ -387,7 +409,7 @@ for(var i = 0; i < nodes.length; i++) {
     // var node = new THREE.Mesh(node_geometry, node_material );
 
     var node_geometry = new THREE.RingGeometry( 0.4, 0.5, 32 );
-    var node_material = new THREE.MeshBasicMaterial( { color: 0xc5ffff, side: THREE.DoubleSide } );
+    var node_material = new THREE.MeshToonMaterial( { color: 0xc5ffff, side: THREE.DoubleSide } );
     var node = new THREE.Mesh( node_geometry, node_material );
 
     node.position.x = x*scaling + 1.5;
@@ -398,7 +420,10 @@ for(var i = 0; i < nodes.length; i++) {
     node_ring_meshes.push(node);
 
     var node_small_geometry = new THREE.CylinderGeometry(0.4, 0.4, 0.05, 32 )
-    var node_small_material = new THREE.MeshBasicMaterial( { color: 0x9ff7d5 } );
+    var node_small_material = new THREE.MeshToonMaterial( { color: 0x9ff7d5 } );
+    if(i == 4) {
+        node_small_material = new THREE.MeshToonMaterial( { color: 0x434444 } );
+    }
     var node_small = new THREE.Mesh(node_small_geometry, node_small_material );
     node_small.position.x = x*scaling + 1.5;
     node_small.position.y = y*scaling + 1.5;
@@ -410,7 +435,7 @@ for(var i = 0; i < nodes.length; i++) {
     node_meshes.push(node_small);
 
     var node_radius_geometry = new THREE.RingGeometry(0, 1, 32 )
-    var node_radius_material = new THREE.MeshBasicMaterial( { color: 0x444343 } );
+    var node_radius_material = new THREE.MeshToonMaterial( { color: 0x444343 } );
     var node_radius = new THREE.Mesh(node_radius_geometry, node_radius_material );
     node_radius.position.x = x*scaling + 1.5;
     node_radius.position.y = y*scaling + 1.5;
@@ -431,7 +456,7 @@ for(var i = 0; i < connections.length; i++) {
 
     var length = Math.sqrt(Math.pow(first_x - second_x, 2) + Math.pow(first_y - second_y, 2))
     var node_geometry = new THREE.BoxGeometry(0.25, length, 0.025, 32 )
-    var node_material = new THREE.MeshBasicMaterial( { color: 0xaddcb9 } );
+    var node_material = new THREE.MeshToonMaterial( { color: 0xaddcb9 } );
     var node = new THREE.Mesh(node_geometry, node_material );
     node.position.x = (first_x + second_x)/2;
     node.position.y = (first_y + second_y)/2;
@@ -492,7 +517,7 @@ function makeBuildings() {
             }
             else {
                 var building_geometry = new THREE.BoxGeometry(randx1, randy1, height);
-                var building_material = new THREE.MeshBasicMaterial( { color: color } );
+                var building_material = new THREE.MeshToonMaterial( { color: color } );
                 var building = new THREE.Mesh(building_geometry, building_material );
                 building.position.x = x*2 + (Math.random()-0.5)*1;
                 building.position.y = y*2 + (Math.random()-0.5)*1;
@@ -770,11 +795,13 @@ function onPlayerReady(event) {
         $.get("/nodes/"+i, function( data ) {
             var msg = JSON.parse(data)
             current_playlist = msg["Playlist"]
-            if(msg["Playlist"].length > 0) {
-                node_meshes[msg["ID"]].material.color.setHex( 0xe74c3c );
-            }
-            else {
-                node_meshes[msg["ID"]].material.color.setHex( 0x9ff7d5 );
+            if(msg["ID"] != 4) {
+                if(msg["Playlist"].length > 0) {
+                    node_meshes[msg["ID"]].material.color.setHex( 0xe74c3c );
+                }
+                else {
+                    node_meshes[msg["ID"]].material.color.setHex( 0x9ff7d5 );
+                }
             }
         });
     }
