@@ -133,8 +133,28 @@ function updatescreen(){
 }
 
 
-function login() {
-    $.post("/auth/login", $("loginform").serialize(), function(data) {
-        alert(data);
-    });
-}
+$('#loginform').on('submit', (event) => {
+  event.preventDefault()
+  let temp = $("#loginform").serializeArray()
+  let form = {}
+  for (let i of temp) {
+    form[i.name] = i.value
+  }
+  $.ajax({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify(form),
+    dataType: 'json',
+    success: () => {
+
+    },
+    method: 'POST',
+    url: '/auth/login',
+    statusCode: {
+      307: () => {
+        location.reload()
+      }
+    }
+  })
+})
