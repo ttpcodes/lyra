@@ -22,10 +22,14 @@ type UserStorer struct {
 
 func (u UserStorer) Create(ctx context.Context, user authboss.User) error {
 	var existing []models.User
-	if err := u.db.Where(user).First(&existing).Error; err != nil {
+	if err := u.db.Where(models.User{
+		Email: user.(*models.User).Email,
+	}).Or(models.User{
+		Username: user.(*models.User).Username,
+	}).First(&existing).Error; err != nil {
 		return err
 	}
-	if len(existing) > 1 {
+	if len(existing) > 0 {
 		return authboss.ErrUserFound
 	}
 	if err := u.db.Create(user.(*models.User)).Error; err != nil {
