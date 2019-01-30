@@ -113,6 +113,7 @@ function updatescreen(){
   login.classList.remove("active");
   register.classList.remove("active");
   loginerror.style.visibility = "hidden";
+  registererror.style.visibility = "hidden";
 
   if (state==1){
     hometextdiv.className = "animated fadeInDown slower props appear";
@@ -172,8 +173,9 @@ $('#register-form').on('submit', (event) => {
     },
     data: JSON.stringify(form),
     dataType: 'json',
-    success: () => {
-
+    success: (data) => {
+      $("#registererror").html(Object.entries(data.errors)[0][1][0]);
+      registererror.style.visibility = "visible";
     },
     method: 'POST',
     url: '/auth/register',
