@@ -6,6 +6,7 @@ import (
 	"github.com/volatiletech/authboss"
 	"github.com/volatiletech/authboss-clientstate"
 	"github.com/volatiletech/authboss/defaults"
+	"regexp"
 
 	_ "github.com/volatiletech/authboss/auth"
 	_ "github.com/volatiletech/authboss/register"
@@ -32,16 +33,17 @@ func CreateAuth(storer UserStorer) {
 	emailRule := defaults.Rules{
 		FieldName: "email",
 		MatchError: "Must be a valid email address.",
+		// https://github.com/volatiletech/authboss-sample/blob/master/blog.go
+		MustMatch: regexp.MustCompile(`.*@.*\.[a-z]{1,}`),
 		Required: true,
 	}
 	passwordRule := defaults.Rules{
 		FieldName: "password",
-		MatchError: "Must be a valid password.",
+		MinLength: 6,
 		Required: true,
 	}
 	usernameRule := defaults.Rules{
 		FieldName: "username",
-		MatchError: "Must be a valid username.",
 		Required: true,
 	}
 	ab.Config.Core.BodyReader = defaults.HTTPBodyReader{

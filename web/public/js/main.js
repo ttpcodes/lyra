@@ -92,7 +92,19 @@ socket.addEventListener('message', (event) => {
 
         if(message["Node"]["ID"] == curr_node) {
             console.log(current_playlist);
-            var new_vid = video_id != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
+            var new_vid = false;
+            if(message["Node"]["Playlist"].length == 0 || current_playlist.length == 0) {
+                new_vid = true;
+            }
+            else {
+                new_vid = message["Node"]["Playlist"][0]["ID"] != current_playlist[0]["ID"] || Math.abs(message["Node"]["CurrentTime"] - current_time) > 5;
+            }
+            // console.log(message["Node"]["CurrentTime"])
+            // console.log(current_time)
+            // console.log(Math.abs(message["Node"]["CurrentTime"] - current_time))
+            console.log(new_vid);
+            // console.log(message["Node"]["Playlist"][0]["ID"])
+            // console.log(current_playlist[0]["ID"])
             current_playlist = message["Node"]["Playlist"]
             current_time = message["Node"]["CurrentTime"]
             if(current_playlist.length == 0) {
@@ -771,6 +783,7 @@ function updateNodeData(force_update) {
         var msg = JSON.parse(data)
         current_playlist = msg["Playlist"]
         current_time = msg["CurrentTime"]
+        console.log(msg);
         if(current_playlist.length == 0) {
             video_id = "None";
             player.pauseVideo();
@@ -876,15 +889,18 @@ function refreshNodePlaylist() {
     else {
         var new_html = "";
         var playlist = current_playlist;
-        for(var i = 1; i < playlist.length; i++) {
+        for(var i = 0; i < playlist.length; i++) {
             var titlestr = "" + playlist[i]["Title"]
             // new_html += "<tr class = 'songrow'><td class = 'trash'><i onclick='deleteMySong("+i+")' class='fas fa-trash-alt' style = 'position:relative;'></i></td><td class = 'button'><i onclick='queueMySong("+i+") class='fas fa-plus' style = 'position:relative;'></i></td><td class ='song' onclick='queueMySong("+i+")>"+playlist[i]["Title"]+"</td></tr>"
             var new_part = "<tr class = 'nodesongrow'>" +
-                "<td class ='nodesong' onclick=queueMySong("+i+")>";
+                "<td class ='nodesong' onclick=saveSong("+i+")>";
             var final_part = new_part + titlestr + "</td>" + "</tr>";
+            if(i == 0) {
+                final_part = new_part + "[NOW] " + titlestr + "</td>" + "</tr>";
+            }
             new_html += final_part;
         }
-        if(playlist.length <= 1) {
+        if(playlist.length <= 0) {
             $("#nodetable").html("<tr class = 'nodesongrow'><td class = 'nodesong'>Nothing in the queue! Add a song to play it.</tr></td>");
         }
         else {
@@ -932,9 +948,9 @@ function queueMusicNode() {
             vid_id = vid_id.substring(0, ampersandPosition);
         }
         socket.send(JSON.stringify({"Command": "queue", "ID" :vid_id}))
-        current_playlist.push({name: "(Retrieving name...)",
-        id: vid_id,
-        time: 300})
+        current_playlist.push({"Title": "(Retrieving name...)",
+        "ID": "None",
+        "Length": 300})
         $("#queue_input").val("");
         console.log("lmao")
         refreshNodePlaylist();
@@ -979,10 +995,17 @@ function queueMySong(index) {
         document.getElementById('myModal2').style.display = "block";
     }
     else {
-        current_playlist.push({name: my_playlist[index]["Title"],
-        id: my_playlist[index]["ID"],
-        time: my_playlist[index]["Length"]})
+        current_playlist.push({"Title": my_playlist[index]["Title"],
+        "ID": "None",
+        "Length": my_playlist[index]["Length"]})
         socket.send(JSON.stringify({"Command": "queue", "ID" :my_playlist[index]["ID"]}))
         refreshNodePlaylist();
     }
+}
+
+function saveSong(index) {
+    my_playlist.push({"Title": current_playlist[index]["Title"],
+    "ID": current_playlist[index]["ID"],
+    "Length": current_playlist[index]["Length"]})
+    socket.send(JSON.stringify({"Command": "add", "URL" :"https://www.youtube.com/watch?v="+current_playlist[index]["ID"]}))
 }
