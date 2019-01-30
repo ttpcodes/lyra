@@ -174,7 +174,7 @@ $('#register-form').on('submit', (event) => {
     data: JSON.stringify(form),
     dataType: 'json',
     success: (data) => {
-      $("#registererror").html(Object.entries(data.errors)[0][1][0]);
+      $("#registererror").html(Object.entries(data.errors)[0][0] + " " + Object.entries(data.errors)[0][1][0]);
       registererror.style.visibility = "visible";
     },
     method: 'POST',
